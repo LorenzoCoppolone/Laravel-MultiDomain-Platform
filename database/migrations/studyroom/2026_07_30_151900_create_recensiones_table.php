@@ -11,8 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recensiones', function (Blueprint $table) {
+        Schema::create('recensioni', function (Blueprint $table) {
             $table->id();
+            $table->float('voto');
+            $table->string('commento', 255);
+            
+            // Foreign keys con onDelete a cascata per il materiale e lo studente
+            $table->foreignId('materiale_id')->constrained('materiali')->onDelete('cascade');
+            $table->foreignId('studente_id')->constrained('studenti')->onDelete('cascade');
+            
+            // Vincolo di unicità composto
+            $table->unique(['materiale_id', 'studente_id'], 'unique_recensione');
+            
             $table->timestamps();
         });
     }
@@ -22,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('recensiones');
+        Schema::dropIfExists('recensioni');
     }
 };

@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('preferitos', function (Blueprint $table) {
-            $table->id();
+        Schema::create('corsidilaurea', function (Blueprint $table) {
+            $table->string('codice_corso', 10)->primary();
+            $table->string('nome_corso');
             $table->timestamps();
         });
     }
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('preferitos');
+        Schema::dropIfExists('corsidilaurea');
     }
 };

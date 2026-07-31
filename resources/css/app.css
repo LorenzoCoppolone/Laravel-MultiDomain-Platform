@@ -1,9 +1,102 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
+/* 
+ * CSS Personalizzato per il layout della Home
+ * Usa l'architettura a Flexbox
+ */
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+body {
+    @apply m-0 p-0 font-sans bg-gray-50 text-gray-800 flex min-h-screen;
+}
+
+/* STILI DELLA SIDEBAR */
+.sidebar {
+    @apply w-64 bg-indigo-950 text-white flex flex-col shadow-xl;
+    min-height: 100vh;
+}
+
+.sidebar-header {
+    @apply p-6 text-2xl font-bold border-b border-slate-800 text-indigo-400 tracking-wider;
+}
+
+.nav-menu {
+    @apply list-none p-0 m-0 mt-6;
+}
+
+.nav-item {
+    @apply relative border-b border-slate-800/50;
+}
+
+.nav-link {
+    @apply block px-6 py-4 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors duration-200 cursor-pointer font-medium;
+}
+
+/* STILI DEL DROPDOWN (Menù a tendina) */
+/* Di default, il dropdown è nascosto */
+.dropdown-content {
+    @apply hidden bg-slate-800 flex-col;
+}
+
+/* Quando si passa col mouse sopra il nav-item, mostra il dropdown */
+.nav-item:hover .dropdown-content {
+    @apply flex;
+}
+
+.dropdown-item {
+    @apply block pl-10 pr-6 py-3 text-sm text-slate-400 hover:text-indigo-300 hover:bg-slate-800 transition-colors duration-150;
+}
+
+/* STILI DELL'AREA PRINCIPALE */
+.main-content {
+    @apply flex-1 p-12 bg-gray-50 flex flex-col justify-center items-start;
+}
+
+.badge {
+    @apply inline-block px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-semibold rounded-full uppercase tracking-wide mb-6;
+}
+
+.hero-title {
+    @apply text-5xl font-extrabold text-slate-900 mb-4 tracking-tight;
+}
+
+.hero-subtitle {
+    @apply text-xl text-slate-600 max-w-2xl leading-relaxed;
+}
+
+.info-container {
+    @apply max-w-4xl mx-auto py-8;
+}
+
+.info-header {
+    @apply mb-10 border-b border-gray-200 pb-6;
+}
+
+.info-main-title {
+    @apply text-4xl font-extrabold text-slate-900 tracking-tight mb-2;
+}
+
+.info-lead {
+    @apply text-lg text-slate-600;
+}
+
+.info-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6 mb-8;
+}
+
+.info-card {
+    @apply bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow;
+}
+
+.info-card-title {
+    @apply text-xl font-bold text-indigo-600 mb-3 flex items-center;
+}
+
+.info-card-text {
+    @apply text-slate-600 text-sm leading-relaxed;
+}
+
+.tech-badge {
+    @apply inline-block bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded-md mr-1 mb-1;
 }

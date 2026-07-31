@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('downloads', function (Blueprint $table) {
             $table->id();
+            
+            // Foreign Keys con onDelete a cascata per il materiale
+            $table->foreignId('materiale_id')->constrained('materiali')->onDelete('cascade');
+            $table->foreignId('studente_id')->constrained('studenti')->onDelete('cascade');
+            
+            // Vincolo di unicità composto
+            $table->unique(['materiale_id', 'studente_id'], 'unique_download');
+            
             $table->timestamps();
         });
     }

@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\User;
-
 return [
 
     /*
@@ -42,6 +41,17 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        // --- I TUOI NUOVI GUARDS ---
+        'studente' => [
+            'driver' => 'session',
+            'provider' => 'studenti', // Punta al provider qui sotto
+        ],
+
+        'amministratore' => [
+            'driver' => 'session',
+            'provider' => 'amministratori',
+        ],
     ],
 
     /*
@@ -61,16 +71,22 @@ return [
     |
     */
 
-    'providers' => [
+   'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', User::class),
+            'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        // --- I TUOI NUOVI PROVIDERS ---
+        'studenti' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\studyroom\Studente::class, // Punta al tuo nuovo Model!
+        ],
+
+        'amministratori' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\studyroom\Amministratore::class,
+        ],
     ],
 
     /*

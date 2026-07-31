@@ -1,0 +1,90 @@
+/* =============================================
+   COMPONENTE: form-input
+   ============================================= */
+
+.campo-input {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 22px 0;
+}
+
+.campo-input input {
+    width: 100%;
+    height: 100%;
+    background: #f4f2fc;
+    border: 2px solid #ddd8f5;
+    outline: none;
+    border-radius: 45px;
+    font-size: 17px;
+    color: #1a1a2e;
+    padding: 20px 45px 20px 20px;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.campo-input input:focus {
+    border-color: #6C4FD4;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(108, 79, 212, 0.15);
+}
+
+.campo-input input:hover {
+    border-color: #6C4FD4;
+    box-shadow: 0 0 0 4px rgba(108, 79, 212, 0.10);
+}
+
+.campo-input:has(input:hover) i,
+.campo-input:has(input:focus) i {
+    color: #6C4FD4;
+}
+
+.campo-input input::placeholder {
+    color: #7a7a9d;
+}
+
+.campo-input i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #7a7a9d;
+}
+
+/* Feedback colori campo */
+.campo-input input.valido {
+    border-color: #4ade80;
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.3);
+}
+.campo-input input.errore {
+    border-color: #f87171;
+    box-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
+}
+.campo-input:has(input.valido) i { color: #4ade80; }
+.campo-input:has(input.errore) i { color: #f87171; }
+
+/* Messaggio errore sotto il campo */
+.msg-errore {
+    font-size: 12px;
+    color: #f87171;
+    margin-top: -22px;
+    margin-bottom: 10px;
+    padding-left: 16px;
+    min-height: 16px;
+    display: block;
+}
+
+.msg-errore.ok { color: #4ade80; }
+
+/* Icona occhio mostra/nascondi */
+.toggle-password {
+    cursor: pointer;
+    user-select: none;
+}
+
+@media (max-width: 480px) {
+    .campo-input { margin: 16px 0; }
+    .campo-input input { font-size: 15px; }
+}

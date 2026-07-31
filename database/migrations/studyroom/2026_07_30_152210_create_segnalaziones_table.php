@@ -11,8 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('segnalaziones', function (Blueprint $table) {
+        Schema::create('segnalazioni', function (Blueprint $table) {
             $table->id();
+            $table->string('motivo');
+            
+            // Foreign Keys
+            $table->foreignId('segnalante_id')->constrained('studenti')->onDelete('cascade');
+            $table->foreignId('materiale_segnalato_id')->constrained('materiali')->onDelete('cascade');
+            $table->foreignId('amministratore_id')->constrained('amministratori')->onDelete('cascade');
+            
+            // Vincolo di unicità composto
+            $table->unique(['materiale_segnalato_id', 'segnalante_id'], 'unique_segnalazione');
+            
             $table->timestamps();
         });
     }
@@ -22,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('segnalaziones');
+        Schema::dropIfExists('segnalazioni');
     }
 };

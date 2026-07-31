@@ -1,24 +1,19 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import { bunny } from 'laravel-vite-plugin/fonts';
-import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: true,
-            fonts: [
-                bunny('Instrument Sans', {
-                    weights: [400, 500, 600],
-                }),
+            input: ['resources/css/app.css', 'resources/js/app.js',
+
+                // Aggiungi qui tutti i CSS del tuo modulo
+                'resources/css/studyroom/styleLayout.css',
+                'resources/css/studyroom/styleHome.css',
+                'resources/css/components/search-form.css',
+                'resources/css/components/user-avatar.css',
+                'resources/css/components/form-input.css',
             ],
+            refresh: true,
         }),
-        tailwindcss(),
     ],
-    server: {
-        watch: {
-            ignored: ['**/storage/framework/views/**'],
-        },
-    },
 });
