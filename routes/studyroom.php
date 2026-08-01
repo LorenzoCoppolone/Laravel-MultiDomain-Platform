@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Studyroom\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Studyroom\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Studyroom\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Studyroom\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Studyroom\Auth\NewPasswordController;
+use App\Http\Controllers\Studyroom\Auth\PasswordController;
+use App\Http\Controllers\Studyroom\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Studyroom\Auth\RegisteredUserController;
+use App\Http\Controllers\Studyroom\Auth\VerifyEmailController;
+use App\Http\Controllers\Studyroom\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // Applico il prefisso URL e il prefisso del nome a TUTTO il modulo
@@ -41,8 +41,8 @@ Route::prefix('studyroom')->name('studyroom.')->group(function () {
     // Nota: diciamo a Laravel di cercare negli specifici Guard
     Route::middleware('auth:studente,amministratore')->group(function () {
         
-        Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
-        Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+        Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice');
+        Route::get('verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
             ->middleware(['signed', 'throttle:6,1'])
             ->name('verification.verify');
         Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
@@ -57,7 +57,7 @@ Route::prefix('studyroom')->name('studyroom.')->group(function () {
 
         // DASHBOARD
         Route::get('dashboard', function () {
-            return view('dashboard');
+            return view('studyroom.layouts.home');
         })->middleware('verified')->name('dashboard');
 
         // PROFILO

@@ -44,7 +44,7 @@
 
                     <!-- USERNAME -->
                     <a href="{{ route('studyroom.profile.edit') }}" class="nav-user-name">
-                        {{ Auth::guard('studente')->user()->name }}
+                        {{ Auth::guard('studente')->user()->username }}
                     </a>
 
                 @else

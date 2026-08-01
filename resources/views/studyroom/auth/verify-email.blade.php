@@ -1,31 +1,79 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-    </div>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifica Email | StudyRoom</title>
 
-    @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600">
-            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/studyroom_favicon.ico') }}">
+
+    <!-- CSS gestito tramite Vite -->
+    @vite([
+        'resources/css/components/status-icon.css',
+        'resources/css/components/alert-box.css',
+        'resources/css/studyroom/styleEmailPages.css'
+    ])
+
+    <!-- Icone -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="page-container">
+        
+        <div class="logo">
+            <a href="{{ route('studyroom.home') }}">
+                <p>StudyRoom</p>
+            </a>
         </div>
-    @endif
-
-    <div class="mt-4 flex items-center justify-between">
-        <form method="POST" action="{{ route('verification.send') }}">
-            @csrf
-
-            <div>
-                <x-primary-button>
-                    {{ __('Resend Verification Email') }}
-                </x-primary-button>
+        
+        <div class="card">
+            
+            <!-- Componente Icona -->
+            <x-status-icon type="info" icon="bx bx-mail-send" />
+            
+            <h2>Controlla la tua email</h2>
+            <p>Abbiamo inviato un link di conferma a:</p>
+            
+            <!-- Recupera dinamicamente l'email dall'utente loggato nel guard specifico -->
+            <div class="email-badge">
+                {{ Auth::guard('studente')->user()->email }}
             </div>
-        </form>
+            
+            <hr class="divider">
+            
+            <!-- Componente Alert -->
+            <x-alert-box>
+                Controlla anche la cartella <strong>Spam</strong> o <strong>Posta indesiderata</strong>
+            </x-alert-box>
+            
+            <!-- Status di conferma (se appena reinviata) -->
+            @if (session('status') == 'verification-link-sent')
+                <div style="color: #22c55e; font-size: 13px; font-weight: 600; margin-bottom: 1rem;">
+                    Un nuovo link di verifica è stato inviato all'indirizzo email fornito.
+                </div>
+            @endif
 
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-
-            <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                {{ __('Log Out') }}
-            </button>
-        </form>
+            <div class="resend-row">
+                <span>Non hai ricevuto nulla?</span>
+                
+                <!-- Form POST per il reinvio (Sicurezza Laravel CSRF) -->
+                <form method="POST" action="{{ route('studyroom.verification.send') }}">
+                    @csrf
+                    <button type="submit" class="resend-btn">
+                        Invia di nuovo
+                    </button>
+                </form>
+            </div>
+            
+        </div>
     </div>
-</x-guest-layout>
+    
+</body>
+</html>

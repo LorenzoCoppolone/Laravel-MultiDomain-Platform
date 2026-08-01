@@ -1,29 +1,72 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('studyroom.layouts.layout')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+@section('title', 'Profilo | StudyRoom')
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
+@section('pageCSS')
+    @vite([
+        'resources/css/components/profile-header.css',
+        'resources/css/components/btn-pill.css',
+        'resources/css/studyroom/styleProfiloUtente.css'
+    ])
+@endsection
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
+@section('content')
+
+    <a href="{{ route('studyroom.dashboard') }}" class="back-link">
+        <i class="fa fa-arrow-left"></i> Torna alla home
+    </a>
+
+    <section class="profile-card">
+
+        <!-- HEADER: Componente -->
+        <x-profile-header :utente="Auth::guard('studente')->user()">
+            <!-- Bottone Modifica iniettato nello slot -->
+            <x-btn-pill 
+                href="{{ route('studyroom.profile.edit') }}" 
+                icon="fa fa-pen" 
+                type="primary" 
+                customClass="mt-3">
+                Modifica
+            </x-btn-pill>
+        </x-profile-header>
+
+        <hr class="profile-divider">
+
+        <!-- SEZIONI -->
+        <nav class="profile-sections">
+            <a href="{{ url('/studyroom/preferiti') }}" class="section-link">
+                <i class="fa fa-heart"></i> Preferiti
+            </a>
+            <a href="{{ url('/studyroom/download') }}" class="section-link">
+                <i class="fa fa-download"></i> Scaricati
+            </a>
+            <a href="{{ url('/studyroom/recensioni') }}" class="section-link">
+                <i class="fa fa-star"></i> Mie recensioni
+            </a>
+            <a href="{{ url('/studyroom/caricati') }}" class="section-link">
+                <i class="fa fa-file-arrow-up"></i> Caricati
+            </a>
+        </nav>
+
+        <hr class="profile-divider">
+
+        <!-- AZIONI ACCOUNT -->
+        <div class="profile-account-actions">
+            
+            <x-btn-pill href="{{ route('studyroom.password.request') }}" icon="fa fa-key" type="secondary">
+                Modifica password
+            </x-btn-pill>
+
+            <!-- Logout sicuro con metodo POST -->
+            <form method="POST" action="{{ route('studyroom.logout') }}" style="width: 100%;">
+                @csrf
+                <x-btn-pill type="danger" icon="fa fa-right-from-bracket" customClass="w-100">
+                    Logout
+                </x-btn-pill>
+            </form>
+
         </div>
-    </div>
-</x-app-layout>
+
+    </section>
+
+@endsection

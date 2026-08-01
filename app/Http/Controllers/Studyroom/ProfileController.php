@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Studyroom;
 
 use App\Models\studyroom\Studente;
 use App\Models\studyroom\Amministratore;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,16 +14,10 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+    public function edit(Request $request)
     {
-        // Nota: in futuro potresti voler cambiare 'profile.edit' in 'studyroom.profile.edit' 
-        // per separare le viste blade del tuo modulo.
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = Auth::user();
+        return view('studyroom.profile.edit', compact('user'));
     }
 
     /**
@@ -37,7 +32,7 @@ class ProfileController extends Controller
 
         // 2. Validiamo i dati direttamente qui, abbandonando il ProfileUpdateRequest di default
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'nome' => ['required', 'string', 'max:255'],
             'email' => [
                 'required', 'string', 'lowercase', 'email', 'max:255', 
                 Rule::unique($modelClass)->ignore($user->id)
@@ -80,6 +75,6 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         // 4. Reindirizziamo alla home del modulo
-        return Redirect::to('/studyroom');
+        return Redirect::to('home')->with('status', 'account-deleted');
     }
 }

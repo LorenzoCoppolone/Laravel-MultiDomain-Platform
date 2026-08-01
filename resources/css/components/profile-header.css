@@ -1,0 +1,73 @@
+/* --- PROFILE HEADER COMPONENT --- */
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+}
+
+.profile-photo {
+    flex: 0 0 120px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--color-primary);
+    background: var(--color-primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-photo i {
+    font-size: 4rem;
+    color: var(--color-primary);
+}
+
+.profile-identity {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--color-primary);
+    margin-bottom: 0.6rem;
+}
+
+.profile-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.3rem;
+    word-break: break-word;
+}
+
+.profile-meta i {
+    width: 16px;
+    text-align: center;
+    color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    .profile-meta {
+        justify-content: center;
+    }
+}

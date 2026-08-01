@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Studyroom\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\studyroom\Studente;
@@ -58,6 +58,6 @@ class RegisteredUserController extends Controller
 
         Auth::guard('studente')->login($user);
 
-        return redirect(route('studyroom.layouts.home', absolute: false));
+        return redirect(route('studyroom.verification.notice', absolute: false));
     }
 }

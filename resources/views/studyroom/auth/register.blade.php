@@ -112,7 +112,5 @@
         </div>
     </main>
 
-    <!-- Script JavaScript posizionato nella cartella public/js/ -->
-    <script src="{{ asset('js/validazione.js') }}"></script>
 </body>
 </html>

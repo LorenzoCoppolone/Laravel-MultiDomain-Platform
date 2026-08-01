@@ -16,7 +16,19 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Gestione dinamica dei redirect per gli utenti non loggati
+        $middleware->redirectGuestsTo(function (Request $request) {
+            
+            // Se l'utente sta navigando nel modulo studyroom, rimandalo al SUO login
+            if ($request->is('studyroom') || $request->is('studyroom/*')) {
+                return route('studyroom.login');
+            }
+
+            // Fallback globale (se hai un login principale per l'intero sito)
+            // Se non ce l'hai, potresti reindirizzare alla home principale url('/')
+            return route('login'); 
+        });
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

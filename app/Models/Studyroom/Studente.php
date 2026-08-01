@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use App\Notifications\StudyroomVerifyEmail;
 class Studente extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
@@ -62,4 +62,10 @@ class Studente extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Recensione::class, 'studente_id');
     }
+
+
+public function sendEmailVerificationNotification()
+{
+    $this->notify(new StudyroomVerifyEmail);
+}
 }
