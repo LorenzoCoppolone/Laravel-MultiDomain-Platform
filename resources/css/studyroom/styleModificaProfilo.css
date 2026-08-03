@@ -1,0 +1,67 @@
+/* =============================================
+   STUDYROOM — styleModificaProfilo.css
+   ============================================= */
+main {
+    flex: 1;
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+.edit-card {
+    background: var(--color-card);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-box);
+    box-shadow: var(--shadow-soft);
+    padding: 2.5rem;
+}
+
+.edit-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--color-primary);
+    margin-bottom: 2rem;
+}
+
+.edit-title i {
+    font-size: 0.9em;
+}
+
+.edit-error {
+    background: var(--color-primary-light);
+    border: 1.5px solid var(--color-accent);
+    color: var(--color-accent);
+    border-radius: var(--radius-box);
+    padding: 0.8rem 1rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.edit-actions .btn-pill {
+    flex: 1;
+}
+
+@media (max-width: 480px) {
+    main { padding: 1.5rem 1rem; }
+    .edit-card { padding: 1.75rem 1.5rem; }
+    .edit-actions { flex-direction: column; }
+}

@@ -24,8 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 return route('studyroom.login');
             }
 
-            // Fallback globale (se hai un login principale per l'intero sito)
-            // Se non ce l'hai, potresti reindirizzare alla home principale url('/')
+            // Fallback globale
             return route('login'); 
         });
 

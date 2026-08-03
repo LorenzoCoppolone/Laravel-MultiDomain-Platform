@@ -1,102 +1,267 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* =============================================
+   STUDYROOM — styleDashboard.css
+   Layout a Flexbox con Sidebar (Ex-Tailwind)
+   ============================================= */
 
-/* 
- * CSS Personalizzato per il layout della Home
- * Usa l'architettura a Flexbox
- */
-
-body {
-    @apply m-0 p-0 font-sans bg-gray-50 text-gray-800 flex min-h-screen;
+/* ─────────────────────────────────────────────
+   VARIABILI GLOBALI (Stessa palette del progetto)
+   ───────────────────────────────────────────── */
+:root {
+    --color-primary:        #6C4FD4;
+    --color-primary-dark:   #4f38a8;
+    --color-primary-light:  #ede9fb;
+    --color-text:           #1a1a2e;
+    --color-text-muted:     #4f4f6a;
+    --color-bg:             #f4f2fc;
+    --color-card:           #ffffff;
+    --color-border:         #ddd8f5;
+    
+    --font-display: 'Poppins', sans-serif;
+    --font-body:    'Poppins', sans-serif;
+    
+    --radius-pill: 999px;
+    --radius-box:  16px;
+    --shadow-soft: 0 4px 24px rgba(108, 79, 212, 0.10);
 }
 
-/* STILI DELLA SIDEBAR */
-.sidebar {
-    @apply w-64 bg-indigo-950 text-white flex flex-col shadow-xl;
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =============================================
+   IMPOSTAZIONI BASE (Body)
+   ============================================= */
+body {
+    font-family: var(--font-body);
+    color: var(--color-text);
+    display: flex;
     min-height: 100vh;
+    
+    /* Manteniamo il gradiente radiale distintivo di StudyRoom */
+    background: radial-gradient(ellipse 75% 75% at top, #ddd6fe 0%, #a78bfa 45%, #ffffff 100%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+}
+/* =============================================
+   SIDEBAR (Menù Laterale) - Colori StudyRoom
+   ============================================= */
+
+/* Definiamo i colori base per la sidebar */
+:root {
+    --color-sidebar-bg: #1a1a2e; /* Il blu scuro elegante di StudyRoom */
+    --color-dropdown-bg: #11111f; /* Leggermente più scuro per profondità */
+    --color-sidebar-text: #e2e8f0;
+    --color-sidebar-muted: #94a3b8;
+}
+
+.sidebar {
+    width: 260px;
+    background-color: var(--color-sidebar-bg);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+    min-height: 100vh;
+    z-index: 10;
 }
 
 .sidebar-header {
-    @apply p-6 text-2xl font-bold border-b border-slate-800 text-indigo-400 tracking-wider;
+    padding: 1.5rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff; /* Nell'immagine è bianco brillante */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    letter-spacing: 0.5px;
 }
 
 .nav-menu {
-    @apply list-none p-0 m-0 mt-6;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-item {
-    @apply relative border-b border-slate-800/50;
+    position: relative;
+    /* Rimosso il bordo sotto ogni item per renderlo più pulito come in foto */
 }
 
 .nav-link {
-    @apply block px-6 py-4 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors duration-200 cursor-pointer font-medium;
+    display: block;
+    padding: 1rem 1.5rem;
+    color: var(--color-sidebar-text);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    cursor: pointer;
 }
 
-/* STILI DEL DROPDOWN (Menù a tendina) */
-/* Di default, il dropdown è nascosto */
+/* Effetto a blocco pieno Edge-to-Edge (come nella tua immagine) */
+.nav-link:hover,
+.nav-item:focus-within > .nav-link,
+.nav-link.active {
+    background-color: var(--color-primary); /* Il viola StudyRoom: #6C4FD4 */
+    color: #ffffff;
+}
+
+/* ── DROPDOWN (Menù a tendina) ── */
 .dropdown-content {
-    @apply hidden bg-slate-800 flex-col;
+    display: none;
+    flex-direction: column;
+    background-color: var(--color-dropdown-bg); /* Sfondo più scuro per il sottomenù */
 }
 
-/* Quando si passa col mouse sopra il nav-item, mostra il dropdown */
 .nav-item:hover .dropdown-content {
-    @apply flex;
+    display: flex;
 }
 
 .dropdown-item {
-    @apply block pl-10 pr-6 py-3 text-sm text-slate-400 hover:text-indigo-300 hover:bg-slate-800 transition-colors duration-150;
+    display: block;
+    padding: 0.85rem 1.5rem 0.85rem 3rem; /* Indentazione per far capire che è un sottomenù */
+    color: var(--color-sidebar-muted);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.15s ease, background-color 0.15s ease;
 }
 
-/* STILI DELL'AREA PRINCIPALE */
+.dropdown-item:hover {
+    color: #ffffff;
+    background-color: rgb(124, 10, 186);
+}
+/* =============================================
+   AREA PRINCIPALE (Main Content)
+   ============================================= */
 .main-content {
-    @apply flex-1 p-12 bg-gray-50 flex flex-col justify-center items-start;
+    flex: 1;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
 }
 
+/* ── HERO TEXT ── */
 .badge {
-    @apply inline-block px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-semibold rounded-full uppercase tracking-wide mb-6;
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
 }
 
 .hero-title {
-    @apply text-5xl font-extrabold text-slate-900 mb-4 tracking-tight;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
 }
 
 .hero-subtitle {
-    @apply text-xl text-slate-600 max-w-2xl leading-relaxed;
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    max-width: 650px;
+    line-height: 1.6;
 }
 
+/* =============================================
+   CONTENITORE INFO & CARD
+   ============================================= */
 .info-container {
-    @apply max-w-4xl mx-auto py-8;
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem 0; /* Allineato a sinistra, togli 'auto' se lo vuoi centrato */
 }
 
 .info-header {
-    @apply mb-10 border-b border-gray-200 pb-6;
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 1.5rem;
 }
 
 .info-main-title {
-    @apply text-4xl font-extrabold text-slate-900 tracking-tight mb-2;
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
 }
 
 .info-lead {
-    @apply text-lg text-slate-600;
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
 }
 
+/* ── GRIGLIA CARDS ── */
 .info-grid {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-6 mb-8;
+    display: grid;
+    /* Adattamento automatico responsive (sostituisce md:grid-cols-2) */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .info-card {
-    @apply bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow;
+    background: var(--color-card);
+    padding: 1.75rem;
+    border-radius: var(--radius-box);
+    border: 1.5px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
+    
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(108, 79, 212, 0.15);
+    border-color: var(--color-primary);
 }
 
 .info-card-title {
-    @apply text-xl font-bold text-indigo-600 mb-3 flex items-center;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .info-card-text {
-    @apply text-slate-600 text-sm leading-relaxed;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
 }
 
+/* ── TECH BADGE (Pillole tecnologiche) ── */
 .tech-badge {
-    @apply inline-block bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded-md mr-1 mb-1;
+    display: inline-block;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    margin-right: 0.35rem;
+    margin-bottom: 0.35rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.tech-badge:hover {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
 }

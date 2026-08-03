@@ -2,9 +2,9 @@
 
 <header class="profile-header">
     <div class="profile-photo">
-        @if($utente->foto_profilo)
-            <!-- Assumiamo che la foto sia salvata nello storage pubblico -->
-            <img src="{{ asset('storage/' . $utente->foto_profilo) }}" alt="Foto profilo">
+        @if($utente->immagine_profilo)
+            <!-- Conversione BLOB in Base64 per la visualizzazione -->
+            <img src="data:{{ $utente->immagine_profilo_mime }};base64,{{ base64_encode($utente->immagine_profilo) }}" alt="Foto profilo">
         @else
             <i class="fa fa-circle-user"></i>
         @endif

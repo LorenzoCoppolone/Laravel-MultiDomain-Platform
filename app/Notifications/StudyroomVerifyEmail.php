@@ -12,7 +12,7 @@ class StudyroomVerifyEmail extends VerifyEmail
     protected function verificationUrl($notifiable)
     {
         return URL::temporarySignedRoute(
-            'studyroom.verification.verify', // nome della tua route
+            'verification.verify', // nome della tua route
             Carbon::now()->addMinutes(60),
             [
                 'id' => $notifiable->getKey(),

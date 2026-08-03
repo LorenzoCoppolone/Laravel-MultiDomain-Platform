@@ -34,7 +34,6 @@ class Studente extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_banned' => 'boolean',
-            'immagine_profilo' => 'binary',
         ];
     }
 
@@ -66,6 +65,7 @@ class Studente extends Authenticatable implements MustVerifyEmail
 
 public function sendEmailVerificationNotification()
 {
-    $this->notify(new StudyroomVerifyEmail);
+ $this->notify(new StudyroomVerifyEmail);
 }
+
 }

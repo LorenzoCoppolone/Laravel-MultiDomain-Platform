@@ -38,13 +38,21 @@
 
             <div class="nav-auth">
                 @if(Auth::guard('studente')->check())
+                @php
+                // Recupero l'utente loggato per passarlo ai campi
+                $utente = Auth::guard('studente')->user();
+                @endphp
 
-                    <!-- Richiamo Componente Avatar -->
-                    <x-user-avatar :base64="$base64 ?? null" />
+                <!-- Richiamo Componente Avatar -->
+                <!-- Se l'utente è loggato, mostra l'avatar -->
+               <x-user-avatar 
+                    :contenuto="$utente->immagine_profilo" 
+                    :mimetype="$utente->immagine_profilo_mimeType" 
+                />
 
                     <!-- USERNAME -->
-                    <a href="{{ route('studyroom.profile.edit') }}" class="nav-user-name">
-                        {{ Auth::guard('studente')->user()->username }}
+                    <a href="{{ route('studyroom.profile.index') }}" class="nav-user-name">
+                        {{ $utente->username }}
                     </a>
 
                 @else

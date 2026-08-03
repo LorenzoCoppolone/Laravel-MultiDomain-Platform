@@ -14,15 +14,16 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function edit(Request $request)
+
+    /**
+     * Show the form for editing the user's profile.
+    */
+    public function edit(Request $request): View
     {
         $user = Auth::user();
         return view('studyroom.profile.edit', compact('user'));
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(Request $request): RedirectResponse
     {
         $user = $request->user();
@@ -30,26 +31,49 @@ class ProfileController extends Controller
         // 1. Capiamo in quale tabella dobbiamo controllare l'univocità dell'email
         $modelClass = $user instanceof Studente ? Studente::class : Amministratore::class;
 
-        // 2. Validiamo i dati direttamente qui, abbandonando il ProfileUpdateRequest di default
+        // 2. Validiamo i dati. ATTENZIONE: Usa 'immagine' come nel form HTML
         $validated = $request->validate([
             'nome' => ['required', 'string', 'max:255'],
+            'cognome' => ['required', 'string', 'max:255'],
             'email' => [
                 'required', 'string', 'lowercase', 'email', 'max:255', 
+                Rule::unique($modelClass)->ignore($user->id),
+                'ends_with:@univaq.it,@student.univaq.it'
+            ],
+            'username' => [
+                'required', 'string', 'max:255', 
                 Rule::unique($modelClass)->ignore($user->id)
             ],
+            'immagine' => ['nullable', 'image', 'max:2048'], // max 2MB
         ]);
 
-        $user->fill($validated);
+        // 3. Assegniamo i campi testuali
+        $user->nome = $validated['nome'];
+        $user->cognome = $validated['cognome'];
+        $user->email = $validated['email'];
+        $user->username = $validated['username'];
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
 
+        // 4. Gestione File per salvataggio BLOB nel Database
+        if ($request->hasFile('immagine')) {
+            $file = $request->file('immagine');
+            
+            // Leggiamo i dati binari del file
+            $user->immagine_profilo = file_get_contents($file->getRealPath());
+            
+            // Leggiamo il tipo MIME (es. 'image/png' o 'image/jpeg')
+            $user->immagine_profilo_mime = $file->getClientMimeType();
+        }
+
         $user->save();
 
-        // 3. Reindirizziamo alla rotta corretta col prefisso!
-        return Redirect::route('studyroom.profile.edit')->with('status', 'profile-updated');
+        // REINDIRIZZA INDIETRO (al form) CON MESSAGGIO DI SUCCESSO
+        return Redirect::back()->with('status', 'Profilo aggiornato con successo!');
     }
+
 
     /**
      * Delete the user's account.

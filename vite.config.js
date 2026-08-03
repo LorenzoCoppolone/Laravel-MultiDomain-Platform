@@ -12,6 +12,11 @@ export default defineConfig({
                 'resources/css/components/search-form.css',
                 'resources/css/components/user-avatar.css',
                 'resources/css/components/form-input.css',
+                'resources/css/components/profile-input.css',
+                'resources/css/components/profile-photo-upload.css',
+                'resources/css/components/btn-pill.css',
+                'resources/css/studyroom/styleModificaProfilo.css',
+                'resources/js/studyroom/modificaProfilo.js'
             ],
             refresh: true,
         }),

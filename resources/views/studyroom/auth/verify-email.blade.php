@@ -64,7 +64,7 @@
                 <span>Non hai ricevuto nulla?</span>
                 
                 <!-- Form POST per il reinvio (Sicurezza Laravel CSRF) -->
-                <form method="POST" action="{{ route('studyroom.verification.send') }}">
+                <form method="POST" action="{{ route('verification.send') }}">
                     @csrf
                     <button type="submit" class="resend-btn">
                         Invia di nuovo

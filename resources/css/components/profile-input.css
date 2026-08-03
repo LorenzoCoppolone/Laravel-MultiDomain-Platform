@@ -1,0 +1,50 @@
+/* --- PROFILE INPUT COMPONENT --- */
+.edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.edit-field label {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-left: 0.2rem;
+}
+
+.campo-input {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: var(--color-card);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: 0.7rem 1.2rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.campo-input:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.campo-input i {
+    width: 18px;
+    text-align: center;
+    color: var(--color-primary);
+}
+
+.campo-input input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text);
+}
+
+.campo-input input::placeholder {
+    color: var(--color-text-muted);
+}

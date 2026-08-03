@@ -7,9 +7,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-
+use Illuminate\View\View;
 class PasswordController extends Controller
 {
+    public function index(Request $request): View
+    {
+        return view('studyroom.profile.password.change');
+    }
     /**
      * Update the user's password.
      */

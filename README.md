@@ -17,15 +17,14 @@ Ogni dominio ha le proprie migrazioni in:
 
 database/migrations/<dominio>
 Esempio per Studyroom:
-
 bash
 php artisan migrate --path=database/migrations/studyroom
 Esempio per Affitti:
-
 bash
 php artisan migrate --path=database/migrations/affitti
 Documentazione
-La documentazione completa dell’architettura si trova nella cartella:
+La documentazione completa nella cartella docs, suddivisa come segue:
 
 docs/
 GestioneModuli.md — struttura del progetto e come lavorare con i moduli
+GestioneAutenticazione.md  — Come viene gestita la parte di login e registrazione

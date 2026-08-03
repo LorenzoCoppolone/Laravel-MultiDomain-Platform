@@ -1,72 +1,116 @@
 @extends('studyroom.layouts.layout')
 
-@section('title', 'Profilo | StudyRoom')
+@section('title', 'Modifica Profilo | StudyRoom')
 
 @section('pageCSS')
     @vite([
-        'resources/css/components/profile-header.css',
-        'resources/css/components/btn-pill.css',
-        'resources/css/studyroom/styleProfiloUtente.css'
+        'resources/css/components/profile-input.css',
+        'resources/css/components/profile-photo-upload.css',
+        'resources/css/components/btn-pill.css', 
+        'resources/css/studyroom/styleModificaProfilo.css',
+        'resources/js/studyroom/modificaProfilo.js'
     ])
 @endsection
 
 @section('content')
 
-    <a href="{{ route('studyroom.dashboard') }}" class="back-link">
-        <i class="fa fa-arrow-left"></i> Torna alla home
-    </a>
+@php
+    // Recupero l'utente loggato per passarlo ai campi
+    $utente = Auth::guard('studente')->user();
+@endphp
 
-    <section class="profile-card">
+<section class="edit-card">
 
-        <!-- HEADER: Componente -->
-        <x-profile-header :utente="Auth::guard('studente')->user()">
-            <!-- Bottone Modifica iniettato nello slot -->
-            <x-btn-pill 
-                href="{{ route('studyroom.profile.edit') }}" 
-                icon="fa fa-pen" 
-                type="primary" 
-                customClass="mt-3">
-                Modifica
+    <h1 class="edit-title"><i class="fa fa-pen"></i> Modifica profilo</h1>
+
+    <!-- Avvisi di sistema (es. aggiornamento completato o errore globale) -->
+    @if (session('status'))
+        <p class="edit-error" style="border-color: #4ade80; color: #166534; background: #f0fdf4;">
+            {{ session('status') }}
+        </p>
+    @endif
+
+    @if (session('error'))
+        <p class="edit-error">{{ session('error') }}</p>
+    @endif
+
+    <form action="{{ route('studyroom.profile.update') }}" method="POST" enctype="multipart/form-data" class="edit-form" id="formModificaProfilo">
+        
+        <!-- Direttive di sicurezza e metodo Laravel -->
+        @csrf
+        @method('PATCH')
+
+        <!-- FOTO PROFILO (Componente) -->
+      <x-profile-photo-upload 
+    :contenuto="$utente->immagine_profilo" 
+    :mimetype="$utente->immagine_profilo_mimeType" 
+/>
+
+        <!-- NOME (Componente) -->
+        <x-profile-input 
+            id="nome" 
+            name="nome" 
+            label="Nome" 
+            icon="fa fa-user" 
+            :value="$utente->nome"
+            :placeholder="$utente->nome"
+            pattern="[a-zA-ZÀ-ÿ\s'\-]+" 
+            title="Solo lettere, nessun numero" 
+            required="true" 
+        />
+
+        <!-- COGNOME (Componente) -->
+        <x-profile-input 
+            id="cognome" 
+            name="cognome" 
+            label="Cognome" 
+            icon="fa fa-id-badge" 
+            :value="$utente->cognome"
+            :placeholder="$utente->cognome"
+            pattern="[a-zA-ZÀ-ÿ\s'\-]+" 
+            title="Solo lettere, nessun numero" 
+            required="true" 
+        />
+
+        <!-- CAMPO EMAIL (Componente) -->
+        <x-profile-input 
+            id="email" 
+            name="email" 
+            label="Email" 
+            icon="fa fa-envelope" 
+            :value="$utente->email"
+            :placeholder="$utente->email"
+            required="true" 
+        />
+
+        <!-- USERNAME (Componente) -->
+        <x-profile-input 
+            id="username" 
+            name="username" 
+            label="Username" 
+            icon="fa fa-at" 
+            :value="$utente->username"
+            :placeholder="$utente->username"
+            pattern="[a-zA-Z0-9_]+" 
+            title="Solo lettere, numeri e _ (no spazi)" 
+            required="true" 
+        />
+
+        <!-- AZIONI -->
+        <div class="edit-actions">
+            <!-- Pulsante Annulla -->
+            <x-btn-pill href="{{ route('studyroom.profile.index') }}" icon="fa fa-xmark" type="secondary">
+                Annulla
             </x-btn-pill>
-        </x-profile-header>
-
-        <hr class="profile-divider">
-
-        <!-- SEZIONI -->
-        <nav class="profile-sections">
-            <a href="{{ url('/studyroom/preferiti') }}" class="section-link">
-                <i class="fa fa-heart"></i> Preferiti
-            </a>
-            <a href="{{ url('/studyroom/download') }}" class="section-link">
-                <i class="fa fa-download"></i> Scaricati
-            </a>
-            <a href="{{ url('/studyroom/recensioni') }}" class="section-link">
-                <i class="fa fa-star"></i> Mie recensioni
-            </a>
-            <a href="{{ url('/studyroom/caricati') }}" class="section-link">
-                <i class="fa fa-file-arrow-up"></i> Caricati
-            </a>
-        </nav>
-
-        <hr class="profile-divider">
-
-        <!-- AZIONI ACCOUNT -->
-        <div class="profile-account-actions">
             
-            <x-btn-pill href="{{ route('studyroom.password.request') }}" icon="fa fa-key" type="secondary">
-                Modifica password
+            <!-- Pulsante Salva -->
+            <x-btn-pill icon="fa fa-floppy-disk" type="primary">
+                Salva modifiche
             </x-btn-pill>
-
-            <!-- Logout sicuro con metodo POST -->
-            <form method="POST" action="{{ route('studyroom.logout') }}" style="width: 100%;">
-                @csrf
-                <x-btn-pill type="danger" icon="fa fa-right-from-bracket" customClass="w-100">
-                    Logout
-                </x-btn-pill>
-            </form>
-
         </div>
 
-    </section>
+    </form>
+
+</section>
 
 @endsection

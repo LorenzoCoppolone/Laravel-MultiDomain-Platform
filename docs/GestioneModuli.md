@@ -1,6 +1,6 @@
 # Gestione del codice
 Il codice viene diviso in sotto cartelle per rendere separati i vari moduli dell'applicazione, in particolare l'idea è la seguente:
-Conoscendo come il framework laravel lavora, si va ad operare al suo interno mettendo: 
+Conoscendo come il framework laravel lavora, si va ad operare al suo interno mettendo package dentro quelli principali di laravel: 
 models/<NomeModulo>
 controller/<NomeModulo>
 .....

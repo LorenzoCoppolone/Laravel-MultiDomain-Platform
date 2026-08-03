@@ -1,8 +1,8 @@
-@props(['base64' => null])
+@props(['contenuto' => null, 'mimetype' => null])
 
-<a href="{{ route('studyroom.profile.edit') }}" class="nav-user-avatar">
-    @if($base64)
-        <img src="{{ $base64 }}" alt="Foto profilo">
+<a href="{{ route('studyroom.profile.index') }}" class="nav-user-avatar">
+    @if($contenuto)
+        <img src="data:{{ $mimetype }};base64,{{ base64_encode($contenuto) }}" alt="Foto profilo">
     @else
         <i class="fa fa-circle-user"></i>
     @endif
