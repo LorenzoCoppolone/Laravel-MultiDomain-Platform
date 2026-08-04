@@ -1,4 +1,13 @@
-@props(['id', 'name', 'label', 'icon', 'value' => '', 'placeholder' => '', 'pattern' => null, 'title' => null, 'required' => false])
+@props(['id', 
+        'name', 
+        'label',
+        'icon',
+        'iconId' => null, 
+        'value' => '', 
+        'placeholder' => '', 
+        'pattern' => null, 
+        'title' => null, 
+        'required' => false])
 
 <div class="edit-field">
     <label for="{{ $id }}">{{ $label }}</label>

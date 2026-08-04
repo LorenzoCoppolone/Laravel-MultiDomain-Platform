@@ -1,0 +1,25 @@
+/* =============================================
+   STUDYROOM — styleRicercaMateriale.css
+   ============================================= */
+
+.results-section { padding: 1.75rem 1.5rem; }
+.results-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+
+/* Stato vuoto */
+.results-empty {
+    grid-column: 1 / -1; text-align: center; padding: 4rem 1.5rem; display: flex;
+    flex-direction: column; align-items: center; gap: 0.6rem; color: var(--color-text-muted);
+    background: var(--color-card); border: 1.5px solid var(--color-border); border-radius: var(--radius-box); box-shadow: var(--shadow-soft);
+}
+.results-empty svg { width: 56px; height: 56px; stroke: var(--color-primary); opacity: 0.55; margin-bottom: 0.5rem; }
+.results-empty p { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--color-text); }
+.results-empty span { font-size: 0.9rem; }
+
+@media (max-width: 768px) {
+    .results-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+    .card { flex-direction: column; align-items: center; text-align: center; }
+    .card__meta { white-space: normal; }
+    .card__footer { width: 100%; }
+}

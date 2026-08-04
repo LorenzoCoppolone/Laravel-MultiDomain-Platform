@@ -105,6 +105,50 @@ main {
 .registrazione a { color: #6C4FD4; text-decoration: none; font-weight: 600; }
 .registrazione a:hover { text-decoration: underline; }
 
+
+
+/* =============================================
+   BOX FEEDBACK (ALERT)
+   ============================================= */
+.alert-box {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    animation: appear 0.3s ease-out;
+}
+
+.alert-box i {
+    font-size: 24px;
+}
+
+/* Successo (Verde) */
+.alert-success {
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+.alert-success i {
+    color: #22c55e;
+}
+
+/* Errore Globale (Rosso) */
+.alert-danger {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+.alert-danger i {
+    color: #ef4444;
+}
+
+
 @media (max-width: 480px) {
     .logo { font-size: 1.5rem; }
     .form-login-container { padding: 32px 24px; }

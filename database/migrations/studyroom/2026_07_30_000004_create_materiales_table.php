@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('tipo'); // Colonna discriminante per il Single Table Inheritance
             
             // File mappato come BLOB (puoi usare longBinary() se i file sono molto grandi)
-            $table->binary('file_Contenuto');
-            $table->string('file_MimeType');
+            $table->mediumBlob('file_Contenuto');
+            $table->string('file_mimeType');
             
             $table->string('tag')->nullable(); // solo per appunto
 

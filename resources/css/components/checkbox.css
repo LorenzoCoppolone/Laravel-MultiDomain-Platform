@@ -1,0 +1,13 @@
+.form-check { display: flex; align-items: center; gap: 0.7rem; cursor: pointer; font-family: var(--font-body); font-size: 0.95rem; color: var(--color-text); }
+.form-check input[type="checkbox"] {
+    appearance: none; -webkit-appearance: none; width: 22px; height: 22px; flex-shrink: 0;
+    border: 2px solid var(--color-primary); border-radius: 6px; cursor: pointer; position: relative;
+    background: var(--color-card); transition: background-color 0.15s ease;
+}
+.form-check input[type="checkbox"]::after {
+    content: "\f00c"; font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 0.7rem; color: #fff; position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); transition: transform 0.15s ease-in-out;
+}
+.form-check input[type="checkbox"]:checked { background: var(--color-primary); }
+.form-check input[type="checkbox"]:checked::after { transform: translate(-50%, -50%) scale(1); }
+.form-check label { cursor: pointer; }

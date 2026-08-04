@@ -28,11 +28,11 @@
         <a href="{{ route('studyroom.home') }}" class="logo">StudyRoom</a>
 
         <!-- Richiamo Componente Search Form -->
-        <x-search-form action="{{ url('/studyroom/cerca') }}" placeholder="Cerca..." formClass="navbar-search" buttonClass="btn-search" />
+        <x-search-form action="{{ route('studyroom.materiali.filtra') }}" placeholder="Cerca..." formClass="navbar-search" buttonClass="btn-search" />
 
         <nav class="navbar-links">
 
-            <a href="{{ url('/studyroom/popolari') }}" class="nav-link nav-esami">
+            <a href="{{ route('studyroom.materiali.popolari') }}" class="nav-link nav-esami">
                 Prepara i tuoi esami
             </a>
 

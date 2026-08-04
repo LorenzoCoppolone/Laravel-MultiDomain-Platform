@@ -17,7 +17,7 @@
 
     <!-- Richiamo Componente Search Form (Versione Home) -->
     <x-search-form 
-        action="{{ url('/studyroom/cerca') }}" 
+        action="{{ route('studyroom.materiali.filtra') }}" 
         placeholder="Inizia a cercare" 
         formClass="search-box" 
         buttonClass="btn-search-main" 
@@ -32,7 +32,7 @@
         <p class="upload-subtitle">Entra a far parte della community</p>
     </div>
 
-    <a href="{{ url('/studyroom/carica') }}" class="upload-box">
+    <a href="{{ route('studyroom.materiali.show') }}" class="upload-box">
         <i class="fa fa-cloud-arrow-up upload-icon"></i>
         <p class="upload-label"><strong>Carica File</strong></p>
         <p class="upload-hint">(Appunti, Esami passati, esercizi, ecc)</p>

@@ -12,7 +12,7 @@ use App\Http\Controllers\Studyroom\Auth\VerifyEmailController;
 use App\Http\Controllers\Studyroom\ProfileController;
 use App\Http\Controllers\Studyroom\HomeController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Studyroom\MaterialeController;
 // ==========================================
 // 1. ROTTE DI VERIFICA (Nomi globali obbligatori per Laravel)
 // ==========================================
@@ -68,6 +68,18 @@ Route::prefix('studyroom')->name('studyroom.')->group(function () {
         Route::delete('profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('verified:verification.notice');
         Route::get('profile/cambia-password', [PasswordController::class, 'index'])->name('profile.password.change')->middleware('verified:verification.notice');
         
+
+        // Materiali
+        Route::get('carica-materiale', [MaterialeController::class, 'show'])->name('materiali.show')->middleware('verified:verification.notice');
+        Route::post('carica-materiale/salva', [MaterialeController::class, 'store'])->name('materiali.salva')->middleware('verified:verification.notice');
+        Route::get('materiali/popolari', [MaterialeController::class, 'popolari'])->name('materiali.popolari');
+        Route::get('materiali/ricerca', [MaterialeController::class, 'ricerca'])->name('materiali.ricerca');
+        Route::get('materiali/filtra', [MaterialeController::class, 'filtra'])->name('materiali.filtra');
+        Route::get('materiale/dettagli/{id}', [MaterialeController::class, 'dettagli'])->name('materiale.dettagli');
+        Route::get('materiale/recensioni/{id}', [MaterialeController::class, 'recensioni'])->name('materiale.recensioni');
+        Route::post('materiale/salva-recensione', [MaterialeController::class, 'salvaRecensione'])->name('materiale.salva-recensione');
+        Route::post('materiale/elimina-recensione', [MaterialeController::class, 'eliminaRecensione'])->name('materiale.elimina-recensione');
+        Route::get('materiale/download/{id}', [MaterialeController::class, 'download'])->name('materiale.download');
     });
 
 });

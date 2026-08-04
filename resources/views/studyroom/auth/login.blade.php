@@ -43,9 +43,12 @@
 
                 <!-- Messaggi di stato globali (es. "Password resettata con successo") -->
                 @if (session('status'))
-                    <span class="msg-errore ok">{{ session('status') }}</span>
+                    <div class="alert-box alert-success">
+                        <i class='bx bx-check-circle'></i>
+                        <span>{{ session('status') }}</span>
+                    </div>
                 @endif
-
+                
                 <!-- Errore di autenticazione (credenziali errate) -->
                 @error('email')
                     <span class="msg-errore" style="margin-top: 0; margin-bottom: 15px; text-align: center;">
@@ -62,7 +65,7 @@
                     required="true" 
                 />
 
-                <!-- Password (Mantenuta in HTML esplicito per l'ID togglePassword del tuo JS) -->
+                <!-- Password (Mantenuta in HTML esplicito per l'ID togglePassword del file JS) -->
                 <div class="campo-input">
                     <input type="password" placeholder="Password" name="password" id="password" required>
                     <i class="bx bx-show toggle-password" id="togglePassword"></i>

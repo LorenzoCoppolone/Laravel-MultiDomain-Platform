@@ -9,7 +9,7 @@ class Appunto extends Materiale
    protected $fillable = [
         'titolo',
         'tipo',
-        'file_MimeType',
+        'file_mimeType',
         'file_Contenuto',
         'insegnamento_id',
         'studente_id',
@@ -17,7 +17,6 @@ class Appunto extends Materiale
     ];
 
     protected $casts = [
-            'file_Contenuto' => 'binary',
             'tag' => tag::class,
         ];
 }
