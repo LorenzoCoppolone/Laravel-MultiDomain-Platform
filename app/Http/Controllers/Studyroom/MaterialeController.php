@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Studyroom\Materiale;
 use App\Models\Studyroom\Appunto;
 use App\Models\Studyroom\Esame;
+use Illuminate\Support\Facades\DB;
 class MaterialeController extends Controller
 {
  public function show(){
@@ -77,7 +78,6 @@ class MaterialeController extends Controller
     // Raccogliamo i filtri inviati dal form
     $filtri = $request->only(['titolo', 'cdl', 'insegnamento', 'tipologia', 'criterio']);
     // Gestione della sessione per mantenere il titolo attivo
-   // Gestione pulita e reattiva del titolo
     if ($request->has('titolo')) {
         $filtri['titolo'] = trim($request->input('titolo'));
         
@@ -119,4 +119,39 @@ class MaterialeController extends Controller
         'selectedInsNome'
     ));
     }
+
+    public function dettagli(int $id): View
+    {
+        $studente = Auth::guard('studente')->user();
+        $materiale = Materiale::dettagliMateriale($id);
+        if(!$materiale) {
+            abort(404, 'Materiale non trovato.');
+        }
+        $preferito = $materiale->preferito !== null;
+        return view('studyroom.materiale.dettagli', compact('materiale', 'studente', 'preferito'));
+    }
+
+
+public function stream(int $id)
+{
+    // 1. Estraiamo SOLO il contenuto del file, il tipo e il titolo dal DB
+    $documento = DB::table('materiali')
+        ->where('id', $id)
+        ->select('file_Contenuto', 'file_mimeType', 'titolo')
+        ->first();
+    // 2. Se non esiste o il contenuto è vuoto, diamo errore 404
+    if (!$documento || empty($documento->file_Contenuto)) {
+        abort(404, 'Il file richiesto non esiste o è danneggiato.');
+    }
+    // 3. Fallback nel caso il mimeType non sia salvato correttamente
+    $mimeType = $documento->file_mimeType ?? 'application/pdf';
+    // Puliamo il titolo per usarlo come nome file temporaneo
+    $safeTitle = preg_replace('/[^A-Za-z0-9\-]/', '_', $documento->titolo);
+    // 4. Restituiamo il file in streaming
+    return response($documento->file_Contenuto)
+        ->header('Content-Type', $mimeType)
+        ->header('Content-Disposition', 'inline; filename="' . $safeTitle . '.pdf"');
+}
+
+    
 }

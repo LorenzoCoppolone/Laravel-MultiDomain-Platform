@@ -48,3 +48,12 @@
     background: #e85555;
     transform: translateY(-2px);
 }
+
+.btn-disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    filter: grayscale(60%);
+    box-shadow: none;
+    transform: none;
+    pointer-events: none;
+}

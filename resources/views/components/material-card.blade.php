@@ -41,25 +41,11 @@
         <p class="card__meta">{{ $mat->corso_di_laurea }}</p>
         <p class="card__meta card__meta--tipo">{{ $mat->tipologia }}</p>
 
-        <div class="card__rating" aria-label="Valutazione: {{ $stelle }} su 5">
-            {{-- Sistema di stelle invariato --}}
-            @for($s = 0; $s < 5; $s++)
-                @if($s < $stelle)
-                    <span class="star star--full">★</span>
-                @else
-                    <span class="star star--empty">★</span>
-                @endif
-            @endfor
-            
-            {{-- Link recensioni dinamico --}}
-            @if($reviewsRoute)
-                <a class="card__rating-count"
-                   href="{{ route($reviewsRoute, $id) }}"
-                   title="Vedi tutte le recensioni">({{ $mat->numeroRecensioni ?? 0 }} recensioni)</a>
-            @else
-                <span class="card__rating-count">({{ $mat->numeroRecensioni ?? 0 }} recensioni)</span>
-            @endif
-        </div>
+       <x-star-rating :media="$mat->mediaValutazione ?? 0">
+            <span class="materiale-rating__count">
+                ({{ $mat->numeroRecensioni ?? 0 }})
+            </span>
+        </x-star-rating>
 
         <div class="card__footer">
             <div class="card__downloads" aria-label="{{ $mat->numeroDownload ?? 0 }} download">

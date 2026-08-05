@@ -23,4 +23,6 @@ class Preferito extends Model
     {
         return $this->belongsTo(Materiale::class, 'materiale_id');
     }
+
+    
 }

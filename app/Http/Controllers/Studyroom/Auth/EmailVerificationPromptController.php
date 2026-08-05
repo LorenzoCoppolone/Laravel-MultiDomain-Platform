@@ -18,7 +18,7 @@ class EmailVerificationPromptController extends Controller
         }
 
         return $studente->hasVerifiedEmail()
-                    ? redirect()->route('studyroom.dashboard')
+                    ? redirect()->route('studyroom.home')
                     : view('studyroom.auth.verify-email'); // Restituisce la vista corretta
     }
 }

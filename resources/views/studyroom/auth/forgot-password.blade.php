@@ -22,7 +22,7 @@
 <main>
 
     <!-- LOGO -->
-    <a href="{{ route('studyroom.dashboard') }}" class="logo">StudyRoom</a>
+    <a href="{{ route('studyroom.home') }}" class="logo">StudyRoom</a>
 
     <!-- BOX FORM -->
     <div class="form-login-container">

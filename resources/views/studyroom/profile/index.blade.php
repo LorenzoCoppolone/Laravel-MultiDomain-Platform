@@ -12,7 +12,7 @@
 
 @section('content')
 
-    <a href="{{ route('studyroom.dashboard') }}" class="back-link">
+    <a href="{{ route('studyroom.home') }}" class="back-link">
         <i class="fa fa-arrow-left"></i> Torna alla home
     </a>
 
@@ -34,7 +34,7 @@
 
         <!-- SEZIONI -->
         <nav class="profile-sections">
-            <a href="{{ url('/studyroom/preferiti') }}" class="section-link">
+            <a href="{{ route('studyroom.profile.preferiti') }}" class="section-link">
                 <i class="fa fa-heart"></i> Preferiti
             </a>
             <a href="{{ url('/studyroom/download') }}" class="section-link">

@@ -22,23 +22,17 @@
 <main>
 
     <!-- LOGO -->
-    <a href="{{ route('studyroom.dashboard') }}" class="logo">StudyRoom</a>
+    <a href="{{ route('studyroom.home') }}" class="logo">StudyRoom</a>
 
-    <!-- BOX FORM -->
+   <!-- BOX FORM -->
     <div class="form-login-container">
 
         <h2>Reimposta Password</h2>
 
-        <form method="POST" action="{{ route('studyroom.password.store') }}">
+        <form method="POST" action="{{ route('studyroom.profile.password.update') }}">
             @csrf
-            @method('PUT')
 
-            <!-- Token di sicurezza -->
-            @isset($token)
-                <input type="hidden" name="token" value="{{ $token }}">
-            @endisset
-
-          <!-- PASSWORD CORRENTE -->
+            <!-- PASSWORD CORRENTE -->
             <x-form-input 
                 type="password" 
                 name="current_password" 
@@ -48,7 +42,7 @@
                 toggleId="toggleCurrent" 
                 required 
             />
-            @error('current_password')
+            @error('current_password', 'updatePassword')
                 <span class="msg-errore">{{ $message }}</span>
             @enderror
 
@@ -62,7 +56,7 @@
                 toggleId="togglePassword" 
                 required 
             />
-            @error('password')
+            @error('password', 'updatePassword')
                 <span class="msg-errore">{{ $message }}</span>
             @enderror
 
@@ -78,9 +72,9 @@
             />
 
             <!-- ERRORE GLOBALE -->
-            @if(session('error') || isset($errore))
-                <span class="msg-errore" style="text-align: center; margin-bottom: 15px;">
-                    {{ session('error') ?? $errore }}
+            @if(session('status') === 'password-updated')
+                <span class="msg-successo" style="text-align: center; margin-bottom: 15px; color: green;">
+                    Password aggiornata con successo!
                 </span>
             @endif
 
@@ -88,15 +82,9 @@
             <button type="submit" class="btn">Reimposta</button>
 
         </form>
-
-        <!-- LINK PASSWORD DIMENTICATA -->
-        <p class="registrazione" style="margin-top: 20px;">
-            <a href="{{ route('studyroom.password.request') }}">Hai dimenticato la tua password?</a>
-        </p>
-
         <!-- LINK HOME -->
         <p class="registrazione" style="margin-top: 8px;">
-            Torna alla <a href="{{ route('studyroom.dashboard') }}">Home</a>
+            Torna alla <a href="{{ route('studyroom.home') }}">Home</a>
         </p>
 
     </div>

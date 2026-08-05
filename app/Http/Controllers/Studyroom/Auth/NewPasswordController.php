@@ -36,12 +36,11 @@ class NewPasswordController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-
-        // 1. Diciamo a Laravel di usare il broker 'studenti' configurato in auth.php
+        
+        // 1. Usiamo il broker 'studenti' configurato in auth.php per resettare la password tramite token
         $status = Password::broker('studenti')->reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             
-            // 2. Usiamo $studente al posto di User $user
             function ($studente) use ($request) {
                 $studente->forceFill([
                     'password' => Hash::make($request->password),
@@ -52,10 +51,10 @@ class NewPasswordController extends Controller
             }
         );
 
-        // 3. Reindirizziamo alla login corretta del modulo (studyroom.login)
+        // 2. Se tutto va bene, reindirizziamo alla login corretta del modulo con il messaggio di successo
         return $status == Password::PASSWORD_RESET
-                    ? redirect()->route('studyroom.login')->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+            ? redirect()->route('studyroom.login')->with('status', __($status))
+            : back()->withInput($request->only('email'))
+                ->withErrors(['email' => __($status)]);
     }
 }

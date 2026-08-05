@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Studyroom;
 
 use App\Models\studyroom\Studente;
+use App\Models\Studyroom\Materiale;
 use App\Models\studyroom\Amministratore;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -11,16 +12,24 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
-
 class ProfileController extends Controller
 {
 
     /**
-     * Show the form for editing the user's profile.
+    * Display the user's profile.
     */
-    public function edit(Request $request): View
+    public function index(): View {
+        $user = Auth::guard('studente')->user();
+    return view('studyroom.profile.index', compact('user'));
+    }
+
+
+    /**
+    * Show the form for editing the user's profile.
+    */
+    public function edit(): View
     {
-        $user = Auth::user();
+        $user = Auth::guard('studente')->user();
         return view('studyroom.profile.edit', compact('user'));
     }
 
@@ -33,16 +42,18 @@ class ProfileController extends Controller
 
         // 2. Validiamo i dati. ATTENZIONE: Usa 'immagine' come nel form HTML
         $validated = $request->validate([
-            'nome' => ['required', 'string', 'max:255'],
-            'cognome' => ['required', 'string', 'max:255'],
+            'nome' => ['required', 'string', 'max:255', 'regex:/^[a-zA-ZÀ-ÿ\s]+$/u'],
+            'cognome' => ['required', 'string', 'max:255', 'regex:/^[a-zA-ZÀ-ÿ\s]+$/u'],
             'email' => [
                 'required', 'string', 'lowercase', 'email', 'max:255', 
                 Rule::unique($modelClass)->ignore($user->id),
-                'ends_with:@univaq.it,@student.univaq.it'
+                'ends_with:@univaq.it,@student.univaq.it',
+                'regex:/^[a-zA-Z0-9._-]+$/'
             ],
             'username' => [
                 'required', 'string', 'max:255', 
-                Rule::unique($modelClass)->ignore($user->id)
+                Rule::unique($modelClass)->ignore($user->id),
+                'regex:/^[a-zA-Z0-9_]+$/'
             ],
             'immagine' => ['nullable', 'image', 'max:2048'], // max 2MB
         ]);
