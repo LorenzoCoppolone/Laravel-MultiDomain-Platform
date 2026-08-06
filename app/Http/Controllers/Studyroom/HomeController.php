@@ -8,10 +8,10 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller {
-    public function index(Request $request): View {
+    public function index(): View {
     $user = null;
 
-    if(Auth::guard('studente')->check()) $user = Auth::user();
+    if(Auth::guard('studente')->check()) $user = Auth::guard('studente')->user();
     
     return view('studyroom.layouts.home', compact('user'));
     }

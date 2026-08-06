@@ -53,7 +53,7 @@ class NewPasswordController extends Controller
 
         // 2. Se tutto va bene, reindirizziamo alla login corretta del modulo con il messaggio di successo
         return $status == Password::PASSWORD_RESET
-            ? redirect()->route('studyroom.login')->with('status', __($status))
+            ? redirect()->route('studyroom.login')->with('status', "password aggiornata con successo!")
             : back()->withInput($request->only('email'))
                 ->withErrors(['email' => __($status)]);
     }

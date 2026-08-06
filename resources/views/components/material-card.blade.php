@@ -42,9 +42,17 @@
         <p class="card__meta card__meta--tipo">{{ $mat->tipologia }}</p>
 
        <x-star-rating :media="$mat->mediaValutazione ?? 0">
-            <span class="materiale-rating__count">
-                ({{ $mat->numeroRecensioni ?? 0 }})
-            </span>
+            @if($reviewsRoute)
+                <!-- Qui usiamo <a> per renderlo cliccabile come nei dettagli -->
+                <a class="materiale-rating__count materiale-rating__link" href="{{ route($reviewsRoute, $id) }}">
+                    ({{ $mat->numeroRecensioni ?? 0 }} recensioni)
+                </a>
+            @else
+                <!-- Fallback se non c'è il link -->
+                <span class="materiale-rating__count">
+                    ({{ $mat->numeroRecensioni ?? 0 }} recensioni)
+                </span>
+            @endif
         </x-star-rating>
 
         <div class="card__footer">

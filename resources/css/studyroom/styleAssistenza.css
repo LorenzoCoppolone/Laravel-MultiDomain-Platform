@@ -1,0 +1,96 @@
+/* Contenitore per centrare perfettamente la card */
+    .supporto-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Stile della Card */
+    .supporto-card {
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        padding: 50px 40px;
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Icona principale in alto */
+    .supporto-icon {
+        font-size: 60px;
+        color: #6c5ce7; /* Il viola di StudyRoom */
+        margin-bottom: 20px;
+    }
+
+    .supporto-card h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 15px;
+        margin-top: 0;
+    }
+
+    .supporto-card p {
+        font-size: 16px;
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 30px;
+    }
+
+    /* Box evidenziato per l'indirizzo email */
+    .email-box {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e4e8;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .email-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .email-box i {
+        font-size: 24px;
+        color: #6c5ce7;
+    }
+
+    /* Link dell'indirizzo email */
+    .email-address {
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+        text-decoration: none;
+    }
+    
+    .email-address:hover {
+        color: #6c5ce7;
+        text-decoration: underline;
+    }
+
+    /* Bottone call to action */
+    .btn-primary {
+        display: inline-block;
+        background-color: #6c5ce7;
+        color: #fff;
+        padding: 12px 28px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #5b4bc4;
+    }

@@ -5,7 +5,7 @@
 @endsection
 
 @section('pageCSS')
-    @vite(['resources/css/studyroom/styleHome.css'])
+    @vite('resources/css/studyroom/styleHome.css')
 @endsection
 
 @section('content')

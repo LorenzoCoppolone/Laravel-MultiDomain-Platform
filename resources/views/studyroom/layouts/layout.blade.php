@@ -37,22 +37,17 @@
             </a>
 
             <div class="nav-auth">
-                @if(Auth::guard('studente')->check())
-                @php
-                // Recupero l'utente loggato per passarlo ai campi
-                $utente = Auth::guard('studente')->user();
-                @endphp
-
+                @if($user)
                 <!-- Richiamo Componente Avatar -->
                 <!-- Se l'utente è loggato, mostra l'avatar -->
                <x-user-avatar 
-                    :contenuto="$utente->immagine_profilo" 
-                    :mimetype="$utente->immagine_profilo_mimeType" 
+                    :contenuto="$user->immagine_profilo" 
+                    :mimetype="$user->immagine_profilo_mimeType" 
                 />
 
                     <!-- USERNAME -->
                     <a href="{{ route('studyroom.profile.index') }}" class="nav-user-name">
-                        {{ $utente->username }}
+                        {{ $user->username }}
                     </a>
 
                 @else
@@ -82,10 +77,10 @@
         <div class="footer-center">
             <a href="{{ route('studyroom.home') }}" class="footer-brand">StudyRoom</a>
             <nav class="footer-links">
-                <a href="{{ url('/studyroom/chiSiamo') }}">Chi siamo</a>
-                <a href="{{ url('/studyroom/supporto') }}">Supporto</a>
-                <a href="{{ url('/studyroom/faq') }}">FAQ</a>
-                <a href="{{ url('/studyroom/termini') }}">Termini di utilizzo</a>
+                <a href="{{ route('studyroom.chi-siamo') }}">Chi siamo</a>
+                <a href="{{ route('studyroom.supporto') }}">Supporto</a>
+                <a href="{{ route('studyroom.FAQ') }}">FAQ</a>
+                <a href="{{ route('studyroom.termini') }}">Termini di utilizzo</a>
             </nav>
         </div>
     </footer>

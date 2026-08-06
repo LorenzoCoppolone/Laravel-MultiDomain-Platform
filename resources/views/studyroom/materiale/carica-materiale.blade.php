@@ -99,7 +99,7 @@
 
         <!-- BOTTONI -->
         <div class="upload-actions">
-            <a href="{{ route('studyroom.dashboard') }}" class="btn btn-secondary btn-home"><i class="fa fa-arrow-left"></i> Home</a>
+            <a href="{{ route('studyroom.home') }}" class="btn btn-secondary btn-home"><i class="fa fa-arrow-left"></i> Home</a>
             <button type="submit" class="btn btn-carica">
                 <i class="fa fa-cloud-arrow-up"></i> Carica materiale
             </button>

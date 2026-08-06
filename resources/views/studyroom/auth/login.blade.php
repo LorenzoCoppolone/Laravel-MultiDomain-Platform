@@ -48,13 +48,6 @@
                         <span>{{ session('status') }}</span>
                     </div>
                 @endif
-                
-                <!-- Errore di autenticazione (credenziali errate) -->
-                @error('email')
-                    <span class="msg-errore" style="margin-top: 0; margin-bottom: 15px; text-align: center;">
-                        {{ $message }}
-                    </span>
-                @enderror
 
                 <!-- Componente Email (Riutilizzato!) -->
                 <x-form-input 
@@ -70,9 +63,6 @@
                     <input type="password" placeholder="Password" name="password" id="password" required>
                     <i class="bx bx-show toggle-password" id="togglePassword"></i>
                 </div>
-                @error('password')
-                    <span class="msg-errore">{{ $message }}</span>
-                @enderror
 
                 <div class="Ricordami">
                     <label for="controllo">

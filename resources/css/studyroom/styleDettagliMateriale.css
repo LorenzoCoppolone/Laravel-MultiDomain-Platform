@@ -42,39 +42,29 @@
 /* =============================================
    VISUALIZZATORE PDF
    ============================================= */
+/* Il contenitore che fa da "finestra" scorrevole */
 .materiale-viewer {
-    background: var(--color-card);
-    border: 1.5px solid var(--color-border);
-    border-radius: var(--radius-box);
-    box-shadow: var(--shadow-soft);
-    overflow: hidden;
-    height: 80vh;
-    min-height: 520px;
+    /* Mantiene il tuo sfondo e i bordi che già hai */
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    
+    /* LA MAGIA: Altezza fissa e scorrimento interno */
+    height: 80vh; /* Occupa l'80% dell'altezza dello schermo */
+    max-height: 800px;
+    overflow-y: auto; /* Fa comparire la barra di scorrimento verticale */
+    overflow-x: hidden;
+    padding: 20px; /* Un po' di respiro attorno alle pagine */
 }
 
-.materiale-viewer__frame {
-    width: 100%;
-    height: 100%;
-    border: none;
+/* Le singole pagine del PDF */
+.materiale-viewer canvas.materiale-viewer__frame {
+    width: 100%; /* Si adatta alla larghezza del riquadro */
+    height: auto !important; /* Mantiene le proporzioni perfette, niente schiacciamento! */
     display: block;
+    margin: 0 auto 20px auto; /* Centra la pagina e lascia spazio prima della successiva */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15); /* Bell'effetto ombra stile foglio di carta */
 }
-
-.materiale-viewer__empty {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    color: var(--color-text-muted);
-}
-
-.materiale-viewer__empty i {
-    font-size: 3rem;
-    color: var(--color-primary);
-    opacity: 0.5;
-}
-
 /* =============================================
    PANNELLO INFO + AZIONI
    ============================================= */

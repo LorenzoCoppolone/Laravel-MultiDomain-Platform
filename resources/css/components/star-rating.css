@@ -34,3 +34,22 @@ a.materiale-rating__count:focus-visible {
     text-decoration: underline;
     font-weight: 600;
 }
+
+a.materiale-rating__link {
+    position: relative;
+    z-index: 2; /* FONDAMENTALE per cliccarlo e non aprire invece i dettagli del materiale */
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease-in-out;
+    display: inline-block;
+}
+
+a.materiale-rating__link:hover {
+    color: #6c5ce7;
+    text-decoration: underline;
+}
+
+a.materiale-rating__link:active {
+    transform: scale(0.85); /* Effetto click "schiacciato" */
+    color: #5b4bc4;
+}

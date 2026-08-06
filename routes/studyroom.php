@@ -14,6 +14,11 @@ use App\Http\Controllers\Studyroom\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Studyroom\MaterialeController;
 use App\Http\Controllers\Studyroom\PreferitoController;
+use App\Models\Studyroom\Recensione;
+use App\Http\Controllers\Studyroom\RecensioneController;
+use App\Http\Controllers\Studyroom\SegnalazioneController;
+use App\Http\Controllers\Studyroom\DownloadController;
+use Illuminate\Support\Facades\Auth;
 
 // 1. ROTTE DI VERIFICA EMAIL SI USA QUELLA DEL FRAMEWORK, NON QUELLA DI STUDYROOM
 Route::prefix('studyroom')->middleware(['auth:studente,amministratore'])->group(function () {
@@ -46,6 +51,21 @@ Route::prefix('studyroom')->name('studyroom.')->group(function () {
     Route::get('materiale/dettagli/{id}', [MaterialeController::class, 'dettagli'])->name('materiale.dettagli');
     Route::get('materiale/stream/{id}', [MaterialeController::class, 'stream'])->name('materiale.stream');
 
+    Route::get('chi-siamo', function () {
+        $user = Auth::guard('studente')->user(); 
+        return view('studyroom.static.chiSiamo', compact('user')); })->name('chi-siamo');
+
+    Route::get('supporto', function () {
+        $user = Auth::guard('studente')->user();
+        return view('studyroom.static.supporto', compact('user')); })->name('supporto');
+
+    Route::get('FAQ', function () {
+        $user = Auth::guard('studente')->user();
+        return view('studyroom.static.faq', compact('user')); })->name('FAQ');
+
+    Route::get('termini-utilizzo', function () {
+        $user = Auth::guard('studente')->user();
+        return view('studyroom.static.termini', compact('user')); })->name('termini');
 
 
     // GUEST (Non loggati)
@@ -65,38 +85,47 @@ Route::prefix('studyroom')->name('studyroom.')->group(function () {
 
 
 
+    Route::middleware('auth:studente,amministratore,banned:studente')->group(function () {
+        Route::get('banned', function(){
+            $user = Auth::guard('studente')->user();
+            return view('studyroom.banned.banned', compact('user'));})->name('auth.banned');
+        
+        Route::get('banned/assistenza', function () {
+            $user = Auth::guard('studente')->user();
+            return view('studyroom.banned.assistenza', compact('user')); })->name('banned.assistenza');
+    });
 
 
     // AUTH (Loggati)
-    Route::middleware('auth:studente,amministratore')->group(function () {
+    Route::middleware(['auth:studente,amministratore', 'verified:verification.notice', 'banned:studente'])->group(function () {
         
 
 
         // Rotte per la gestione della password e del logout
-        Route::put('password', [PasswordController::class, 'update'])->name('password.update')->middleware('verified:verification.notice');
-        Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout')->middleware('verified:verification.notice');
+        Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+        Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 
 
         // PROFILO
-        Route::get('profile', [ProfileController::class, 'index'])->name('profile.index')->middleware('verified:verification.notice');
-        Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('verified:verification.notice');
-        Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update')->middleware('verified:verification.notice');
-        Route::delete('profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('verified:verification.notice');
-        Route::get('profile/cambia-password', [PasswordController::class, 'index'])->name('profile.password.change')->middleware('verified:verification.notice');
-        Route::post('profile/cambia-password/successo', [PasswordController::class, 'update'])->name('profile.password.update')->middleware('verified:verification.notice');
-        Route::get('profile/preferiti', [PreferitoController::class, 'preferitiUtente'])->name('profile.preferiti')->middleware('verified:verification.notice');    
+        Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('profile/cambia-password', [PasswordController::class, 'index'])->name('profile.password.change');
+        Route::post('profile/cambia-password/successo', [PasswordController::class, 'update'])->name('profile.password.update');
+        Route::get('profile/preferiti', [PreferitoController::class, 'preferitiUtente'])->name('profile.preferiti');    
 
 
 
         // Materiali per gli utenti loggati (studente o amministratore)
-        Route::get('carica-materiale', [MaterialeController::class, 'show'])->name('materiali.show')->middleware('verified:verification.notice');
-        Route::post('carica-materiale/salva', [MaterialeController::class, 'store'])->name('materiali.salva')->middleware('verified:verification.notice');
-        Route::get('materiale/recensioni/{id}', [MaterialeController::class, 'recensioni'])->name('materiale.recensioni')->middleware('verified:verification.notice');
-        Route::post('materiale/salva-recensione', [MaterialeController::class, 'salvaRecensione'])->name('materiale.salva-recensione')->middleware('verified:verification.notice');
-        Route::post('materiale/elimina-recensione', [MaterialeController::class, 'eliminaRecensione'])->name('materiale.elimina-recensione')->middleware('verified:verification.notice');
-        Route::get('materiale/download/{id}', [MaterialeController::class, 'download'])->name('materiale.download')->middleware('verified:verification.notice');
-        Route::post('materiale/preferiti', [PreferitoController::class, 'crea'])->name('materiale.preferiti')->middleware('verified:verification.notice');
-        Route::post('materiale/aggiungi-segnalazione', [MaterialeController::class, 'aggiungiSegnalazione'])->name('materiale.aggiungi-segnalazione')->middleware('verified:verification.notice');   
+        Route::get('carica-materiale', [MaterialeController::class, 'show'])->name('materiali.show');
+        Route::post('carica-materiale/salva', [MaterialeController::class, 'store'])->name('materiali.salva');
+        Route::get('materiale/recensioni/{id}', [RecensioneController::class, 'recensioni'])->name('materiale.recensioni');
+        Route::post('materiale/salva-recensione', [RecensioneController::class, 'salvaRecensione'])->name('materiale.salva-recensione');
+        Route::post('materiale/elimina-recensione', [RecensioneController::class, 'eliminaRecensione'])->name('materiale.elimina-recensione');
+        Route::get('materiale/download/{id}', [DownloadController::class, 'download'])->name('materiale.download');
+        Route::post('materiale/preferiti', [PreferitoController::class, 'crea'])->name('materiale.preferiti');
+        Route::post('materiale/aggiungi-segnalazione', [SegnalazioneController::class, 'aggiungiSegnalazione'])->name('materiale.aggiungi-segnalazione');   
     });
 });

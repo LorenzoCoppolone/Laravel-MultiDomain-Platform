@@ -4,27 +4,27 @@ namespace App\Http\Controllers\Studyroom;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Models\Studyroom\CorsoDiLaurea;
 use App\Models\Studyroom\Insegnamento;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Studyroom\Materiale;
 use App\Models\Studyroom\Appunto;
 use App\Models\Studyroom\Esame;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\Studyroom\MaterialeRepository;
+use Illuminate\Http\RedirectResponse;
 class MaterialeController extends Controller
 {
  public function show(){
-    $studente = Auth::guard('studente')->user();
+    $user = Auth::guard('studente')->user();
     $corsi = CorsoDiLaurea::all();
     $insegnamenti = Insegnamento::all();
-    return view('studyroom.materiale.carica-materiale', compact('studente', 'corsi','insegnamenti'));
+    return view('studyroom.materiale.carica-materiale', compact('user', 'corsi','insegnamenti'));
  }
 
- public function store(Request $request): \Illuminate\Http\RedirectResponse
+ public function store(Request $request): RedirectResponse
     {
-        $studente = Auth::guard('studente')->user();
+        $user = Auth::guard('studente')->user();
 
         // Validazione rigorosa di tutti i campi provenienti dal form
         $request->validate([
@@ -47,7 +47,7 @@ class MaterialeController extends Controller
             'file_Contenuto'  => $fileContent,
             'file_mimeType'   => $request->file('file')->getMimeType(),
             'insegnamento_id' => $request->insegnamento,
-            'studente_id'     => $studente->id,
+            'studente_id'     => $user->id,
         ];
 
         // Discriminazione basata sul tipo scelto dall'utente
@@ -64,17 +64,17 @@ class MaterialeController extends Controller
 
     public function popolari(): View
     {
-        $studente = Auth::guard('studente')->user();
+        $user = Auth::guard('studente')->user();
        
-        $materiali = Materiale::trovaMaterialiPopolari();
+        $materiali = MaterialeRepository::trovaMaterialiPopolari();
         $corsi = CorsoDiLaurea::all();
         $insegnamenti = Insegnamento::all();
-        return view('studyroom.materiale.risultati-ricerca', compact('materiali', 'corsi', 'insegnamenti', 'studente'));
+        return view('studyroom.materiale.risultati-ricerca', compact('materiali', 'corsi', 'insegnamenti', 'user'));
     }
 
     public function filtra(Request $request): View
     {
-    $studente = Auth::guard('studente')->user();
+    $user = Auth::guard('studente')->user();
     // Raccogliamo i filtri inviati dal form
     $filtri = $request->only(['titolo', 'cdl', 'insegnamento', 'tipologia', 'criterio']);
     // Gestione della sessione per mantenere il titolo attivo
@@ -94,7 +94,7 @@ class MaterialeController extends Controller
     }
 
     // Eseguiamo la ricerca filtrata
-    $materiali = Materiale::ricercaFiltrata($filtri);
+    $materiali = MaterialeRepository::ricercaFiltrata($filtri);
     $corsi = CorsoDiLaurea::all();
     $insegnamenti = Insegnamento::all();
     // Variabili di supporto per la vista
@@ -109,7 +109,7 @@ class MaterialeController extends Controller
         'materiali', 
         'corsi', 
         'insegnamenti', 
-        'studente', 
+        'user', 
         'filtri', 
         'ordinamento', 
         'queryCorrente',
@@ -120,15 +120,15 @@ class MaterialeController extends Controller
     ));
     }
 
-    public function dettagli(int $id): View
+    public function dettagli(int $id): View|RedirectResponse
     {
-        $studente = Auth::guard('studente')->user();
-        $materiale = Materiale::dettagliMateriale($id);
+        $user = Auth::guard('studente')->user();
+        $materiale = MaterialeRepository::dettagliMateriale($id);
         if(!$materiale) {
-            abort(404, 'Materiale non trovato.');
+            return redirect()->back();
         }
         $preferito = $materiale->preferito !== null;
-        return view('studyroom.materiale.dettagli', compact('materiale', 'studente', 'preferito'));
+        return view('studyroom.materiale.dettagli', compact('materiale', 'user', 'preferito'));
     }
 
 
@@ -139,19 +139,35 @@ public function stream(int $id)
         ->where('id', $id)
         ->select('file_Contenuto', 'file_mimeType', 'titolo')
         ->first();
-    // 2. Se non esiste o il contenuto è vuoto, diamo errore 404
-    if (!$documento || empty($documento->file_Contenuto)) {
-        abort(404, 'Il file richiesto non esiste o è danneggiato.');
+
+    // 2. Se non esiste, 404
+    if (!$documento) {
+        abort(404, 'Il file richiesto non esiste.');
     }
-    // 3. Fallback nel caso il mimeType non sia salvato correttamente
+
+    // 3. Estrazione sicura del BLOB
+    $contenuto = $documento->file_Contenuto;
+    
+    // TRUCCO VITALE: Se il database restituisce il BLOB come "resource", lo leggiamo come stringa
+    if (is_resource($contenuto)) {
+        $contenuto = stream_get_contents($contenuto);
+    }
+
+    // Se dopo la lettura è ancora vuoto, il file è danneggiato
+    if (empty($contenuto)) {
+        abort(404, 'Il file richiesto è danneggiato o vuoto.');
+    }
+
+    // Fallback nel caso il mimeType non sia salvato correttamente
     $mimeType = $documento->file_mimeType ?? 'application/pdf';
+    
     // Puliamo il titolo per usarlo come nome file temporaneo
     $safeTitle = preg_replace('/[^A-Za-z0-9\-]/', '_', $documento->titolo);
-    // 4. Restituiamo il file in streaming
-    return response($documento->file_Contenuto)
+
+    // 4. Restituiamo il file
+    return response($contenuto)
         ->header('Content-Type', $mimeType)
         ->header('Content-Disposition', 'inline; filename="' . $safeTitle . '.pdf"');
 }
-
     
 }

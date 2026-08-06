@@ -59,7 +59,7 @@ class LoginRequest extends FormRequest
         // 3. Se falliscono entrambi, significa che l'utente non esiste o ha sbagliato password.
         RateLimiter::hit($this->throttleKey());
         throw ValidationException::withMessages([
-            'email' => trans('auth.failed'),
+            'email' => trans('credenziali errate'), // Messaggio generico per non rivelare se l'email esiste o meno
         ]);
     }
 

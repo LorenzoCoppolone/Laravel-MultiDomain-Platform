@@ -6,8 +6,11 @@
     @vite([
         'resources/css/components/popup.css',
         'resources/css/studyroom/styleDettagliMateriale.css',
-        'resources/js/components/popup.js'
+        'resources/css/components/star-rating.css',
+        'resources/js/components/popup.js',
+        'resources/js/studyroom/ajax.js'
     ])
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 @endsection
 
 @section('content')
@@ -24,13 +27,8 @@
     <div class="materiale-layout">
 
         <!-- ===================== CONTENUTO PDF ===================== -->
-        <div class="materiale-viewer">
-            @if ($materiale)
-                {{-- Usa una rotta che fa lo streaming del file dal server --}}
-                <iframe class="materiale-viewer__frame"
-                        src="{{ route('studyroom.materiale.stream', $materiale->idMateriale) }}#toolbar=0&navpanes=0&scrollbar=0"
-                        title="Contenuto del materiale"></iframe>
-            @else
+        <div class="materiale-viewer" id="pdf-container" data-stream-url="{{ route('studyroom.materiale.stream', $materiale->idMateriale) }}">
+            @if (!$materiale)
                 <div class="materiale-viewer__empty">
                     <i class="fa fa-file-pdf"></i>
                     <p>Anteprima non disponibile</p>
