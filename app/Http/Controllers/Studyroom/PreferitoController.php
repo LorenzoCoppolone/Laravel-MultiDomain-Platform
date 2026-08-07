@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Studyroom\Preferito;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
-use App\Models\Studyroom\Studente;
+use App\Repositories\Studyroom\StudenteRepository;
 class PreferitoController extends Controller
 {
    public function crea(Request $request)
@@ -42,10 +42,10 @@ class PreferitoController extends Controller
     }
 
     public function preferitiUtente(): View
-{
-    $user = Auth::guard('studente')->user();
-    $materiali = Studente::trovaPreferiti($user->id);
-    return view('studyroom.profile.risultati-ricerca-profilo', compact('user', 'materiali'));
+    {
+        $user = Auth::guard('studente')->user();
+        $materiali = StudenteRepository::trovaPreferiti($user->id);
+        return view('studyroom.profile.risultati-ricerca-profilo', compact('user', 'materiali'));
     }
 
 }

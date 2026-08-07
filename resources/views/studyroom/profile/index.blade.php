@@ -37,10 +37,10 @@
             <a href="{{ route('studyroom.profile.preferiti') }}" class="section-link">
                 <i class="fa fa-heart"></i> Preferiti
             </a>
-            <a href="{{ url('/studyroom/download') }}" class="section-link">
+            <a href="{{ route('studyroom.profile.downloads') }}" class="section-link">
                 <i class="fa fa-download"></i> Scaricati
             </a>
-            <a href="{{ url('/studyroom/recensioni') }}" class="section-link">
+            <a href="{{route('studyroom.profile.recensioni') }}" class="section-link">
                 <i class="fa fa-star"></i> Mie recensioni
             </a>
             <a href="{{ url('/studyroom/caricati') }}" class="section-link">

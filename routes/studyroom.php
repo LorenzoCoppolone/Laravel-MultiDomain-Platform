@@ -50,6 +50,8 @@ Route::prefix('studyroom')->name('studyroom.')->group(function () {
     Route::get('materiali/filtra', [MaterialeController::class, 'filtra'])->name('materiali.filtra');
     Route::get('materiale/dettagli/{id}', [MaterialeController::class, 'dettagli'])->name('materiale.dettagli');
     Route::get('materiale/stream/{id}', [MaterialeController::class, 'stream'])->name('materiale.stream');
+    Route::get('materiale/recensioni/{idMateriale}', [RecensioneController::class, 'recensioniMateriale'])->name('materiale.recensioni');
+
 
     Route::get('chi-siamo', function () {
         $user = Auth::guard('studente')->user(); 
@@ -115,16 +117,16 @@ Route::prefix('studyroom')->name('studyroom.')->group(function () {
         Route::get('profile/cambia-password', [PasswordController::class, 'index'])->name('profile.password.change');
         Route::post('profile/cambia-password/successo', [PasswordController::class, 'update'])->name('profile.password.update');
         Route::get('profile/preferiti', [PreferitoController::class, 'preferitiUtente'])->name('profile.preferiti');    
-
+        Route::get('profile/recensioni', [RecensioneController::class, 'recensioniUtente'])->name('profile.recensioni');
+        Route::get('profile/download', [DownloadController::class, 'downloadsUtente'])->name('profile.downloads');
 
 
         // Materiali per gli utenti loggati (studente o amministratore)
         Route::get('carica-materiale', [MaterialeController::class, 'show'])->name('materiali.show');
         Route::post('carica-materiale/salva', [MaterialeController::class, 'store'])->name('materiali.salva');
-        Route::get('materiale/recensioni/{id}', [RecensioneController::class, 'recensioni'])->name('materiale.recensioni');
         Route::post('materiale/salva-recensione', [RecensioneController::class, 'salvaRecensione'])->name('materiale.salva-recensione');
-        Route::post('materiale/elimina-recensione', [RecensioneController::class, 'eliminaRecensione'])->name('materiale.elimina-recensione');
-        Route::get('materiale/download/{id}', [DownloadController::class, 'download'])->name('materiale.download');
+        Route::delete('materiale/elimina-recensione/{idRecensione}', [RecensioneController::class, 'eliminaRecensione'])->name('materiale.elimina-recensione');
+        Route::get('materiale/download/{idMateriale}', [DownloadController::class, 'download'])->name('materiale.download');
         Route::post('materiale/preferiti', [PreferitoController::class, 'crea'])->name('materiale.preferiti');
         Route::post('materiale/aggiungi-segnalazione', [SegnalazioneController::class, 'aggiungiSegnalazione'])->name('materiale.aggiungi-segnalazione');   
     });

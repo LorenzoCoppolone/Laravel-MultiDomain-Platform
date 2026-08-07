@@ -7,7 +7,7 @@
         'resources/css/components/material-card.css',
         'resources/css/components/pagination.css',
         'resources/css/studyroom/styleRicercaMateriale.css',
-        'resources/css/studyroom/star-rating.css',
+        'resources/css/components/star-rating.css',
         'resources/js/studyroom/upload.js'
     ])
 @endsection

@@ -37,7 +37,8 @@ a.materiale-rating__count:focus-visible {
 
 a.materiale-rating__link {
     position: relative;
-    z-index: 2; /* FONDAMENTALE per cliccarlo e non aprire invece i dettagli del materiale */
+    z-index: 10;
+    pointer-events: auto;
     text-decoration: none;
     color: inherit;
     transition: all 0.2s ease-in-out;
@@ -50,6 +51,6 @@ a.materiale-rating__link:hover {
 }
 
 a.materiale-rating__link:active {
-    transform: scale(0.85); /* Effetto click "schiacciato" */
+    transform: scale(0.85);
     color: #5b4bc4;
 }

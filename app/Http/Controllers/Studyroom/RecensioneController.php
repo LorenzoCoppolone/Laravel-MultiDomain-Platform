@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Studyroom\Recensione;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-
+use App\Repositories\Studyroom\StudenteRepository;
+use Illuminate\View\View;
 class RecensioneController extends Controller
 {
    public function salvaRecensione(Request $request) : RedirectResponse
@@ -30,6 +31,22 @@ class RecensioneController extends Controller
 
     return redirect()->back()->with('success', 'Recensione inserita con successo!');
 }
-    public function eliminaRecensions(Request $request){}
+    public function eliminaRecensione(int $idRecensione): RedirectResponse{
+        Recensione::where('id', $idRecensione)->delete();
+        return redirect()->back()->with('success', 'Recensione eliminata con successo!');
+    }
 
+    public function recensioniMateriale(int $idMateriale){
+        $user = null;
+        if(Auth::guard('studente')->check()){ $user = Auth::guard('studente')->user(); }
+        $recensioni = Recensione::where('materiale_id', $idMateriale)->join('studenti', 'recensioni.studente_id', '=', 'studenti.id')->simplePaginate(10);
+        return view('studyroom.materiale.recensioni', compact('user','recensioni', 'idMateriale'));
+    }
+
+    public function recensioniUtente(): View
+    {
+        $user = Auth::guard('studente')->user();
+        $recensioni = StudenteRepository::trovaRecensioni($user->id);        
+        return view('studyroom.profile.recensioni-utente', compact('user', 'recensioni'));
+    }
 }
