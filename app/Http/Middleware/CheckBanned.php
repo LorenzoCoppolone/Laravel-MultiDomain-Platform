@@ -15,7 +15,7 @@ class CheckBanned
         if (Auth::guard('studente')->check() && Auth::guard('studente')->user()->is_banned) {
             
             // Lo reindirizziamo alla pagina di ban
-           return redirect()->route('studyroom.auth.banned');
+           return redirect()->route('studyroom.banned.banned');
         }
         // Altrimenti, lo facciamo passare normalmente
         return $next($request);

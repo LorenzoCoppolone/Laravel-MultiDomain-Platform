@@ -4,9 +4,9 @@
 
 @section('pageCSS')
     @vite([
-        'resources/css/components/star-rating.css', /* Richiamo CSS globale delle stelle */
-        'resources/css/components/pagination.css',  /* Richiamo CSS della paginazione */
-        'resources/css/studyroom/styleRecensioniUtente.css', /* CSS specifico per questa pagina */
+        'resources/css/components/star-rating.css', 
+        'resources/css/components/pagination.css',  
+        'resources/css/studyroom/styleRecensioniUtente.css', 
         'resources/css/components/popup.css',
         'resources/js/components/popup.js'
     ])
@@ -16,13 +16,10 @@
 
 {{-- Toast di esito (successo/errore) tramite flash message in sessione --}}
 @if (session('success') || session('error'))
-    <!-- Puoi mantenere id="popup-preferiti" o usare una classe/id generico gestito dal tuo popup.js -->
     <div id="popup-preferiti" class="popup {{ session('success') ? 'popup-successo' : 'popup-errore' }}">
         <span class="popup-messaggio">{{ session('success') ?? session('error') }}</span>
     </div>
 @endif
-
-<section class="reviews-wrapper">
 
 <section class="reviews-wrapper">
 
@@ -54,7 +51,37 @@
 
                     <!-- ===================== AZIONI CARD ===================== -->
                     <footer class="review-card__footer">
-                        {{-- Presumo che la rotta prenda l'ID del materiale per capire quale recensione dell'utente eliminare --}}
+
+                        <!-- 1. MODIFICA RECENSIONE (Tramite Disclosure / Slide-down in-line) -->
+                        <details class="materiale-disclosure" style="display:inline-block; width:100%;">
+                            <summary class="btn-azione" style="cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 0.4rem;">
+                                <i class="fa fa-pen"></i> Modifica
+                            </summary>
+                            
+                            <form class="materiale-form" action="{{ route('studyroom.materiale.modifica-recensione', $rec->idRecensione) }}" method="POST" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--color-border);">
+                                @csrf
+                                @method('PUT')
+
+                                <label for="voto-{{ $rec->idRecensione }}">Nuovo Voto</label>
+                                <select id="voto-{{ $rec->idRecensione }}" name="voto" required style="width: 100%; margin-bottom: 0.75rem; padding: 0.5rem;">
+                                    <option value="5" {{ $rec->voto == 5 ? 'selected' : '' }}>★★★★★ (5)</option>
+                                    <option value="4" {{ $rec->voto == 4 ? 'selected' : '' }}>★★★★ (4)</option>
+                                    <option value="3" {{ $rec->voto == 3 ? 'selected' : '' }}>★★★ (3)</option>
+                                    <option value="2" {{ $rec->voto == 2 ? 'selected' : '' }}>★★ (2)</option>
+                                    <option value="1" {{ $rec->voto == 1 ? 'selected' : '' }}>★ (1)</option>
+                                </select>
+
+                                <label for="commento-{{ $rec->idRecensione }}">Nuovo Commento</label>
+                                <textarea id="commento-{{ $rec->idRecensione }}" name="commento" rows="3" maxlength="255"
+                                          placeholder="Modifica il tuo commento (max 255 caratteri)…" style="width: 100%; margin-bottom: 0.75rem; padding: 0.5rem;">{{ $rec->commento }}</textarea>
+
+                                <button type="submit" class="btn-azione btn-azione--primary" style="padding: 0.5rem 1rem;">
+                                    Salva modifiche
+                                </button>
+                            </form>
+                        </details>
+
+                        <!-- 2. ELIMINA RECENSIONE -->
                         <form action="{{ route('studyroom.materiale.elimina-recensione', $rec->idRecensione) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questa recensione?');">
                             @csrf
                             @method('DELETE')
@@ -62,6 +89,7 @@
                                 <i class="fa fa-trash"></i> Elimina
                             </button>
                         </form>
+
                     </footer>
 
                 </article>

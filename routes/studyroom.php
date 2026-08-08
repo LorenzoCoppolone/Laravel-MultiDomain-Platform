@@ -87,10 +87,10 @@ Route::prefix('studyroom')->name('studyroom.')->group(function () {
 
 
 
-    Route::middleware('auth:studente,amministratore,banned:studente')->group(function () {
+    Route::middleware(['auth:studente,amministratore'])->group(function () {
         Route::get('banned', function(){
             $user = Auth::guard('studente')->user();
-            return view('studyroom.banned.banned', compact('user'));})->name('auth.banned');
+            return view('studyroom.banned.banned', compact('user'));})->name('banned.banned');
         
         Route::get('banned/assistenza', function () {
             $user = Auth::guard('studente')->user();
@@ -126,6 +126,7 @@ Route::prefix('studyroom')->name('studyroom.')->group(function () {
         Route::post('carica-materiale/salva', [MaterialeController::class, 'store'])->name('materiali.salva');
         Route::post('materiale/salva-recensione', [RecensioneController::class, 'salvaRecensione'])->name('materiale.salva-recensione');
         Route::delete('materiale/elimina-recensione/{idRecensione}', [RecensioneController::class, 'eliminaRecensione'])->name('materiale.elimina-recensione');
+        Route::put('materiale/modifica-recensione/{idRecensione}', [RecensioneController::class,'modificaRecensione'])->name('materiale.modifica-recensione');
         Route::get('materiale/download/{idMateriale}', [DownloadController::class, 'download'])->name('materiale.download');
         Route::post('materiale/preferiti', [PreferitoController::class, 'crea'])->name('materiale.preferiti');
         Route::post('materiale/aggiungi-segnalazione', [SegnalazioneController::class, 'aggiungiSegnalazione'])->name('materiale.aggiungi-segnalazione');   

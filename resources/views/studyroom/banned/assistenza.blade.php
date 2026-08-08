@@ -18,8 +18,8 @@
         <h1>Come possiamo aiutarti?</h1>
         
         <p>
-            Hai riscontrato un problema tecnico, hai bisogno di informazioni sul tuo account o vuoi segnalare un comportamento scorretto? 
-            Il nostro team è a tua completa disposizione.
+            Il tuo account è stato sospeso, inviaci una mail al seguente indirizzo,
+            ti faremo sapere se tornerà attivo.
         </p>
 
         <!-- Riquadro Email -->

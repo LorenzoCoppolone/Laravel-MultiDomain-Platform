@@ -9,6 +9,7 @@ use App\Models\Studyroom\Materiale;
 use Illuminate\Support\Facades\DB;
 use App\Models\Studyroom\Download;
 use illuminate\Support\Facades\Auth;
+use App\Repositories\Studyroom\StudenteRepository;
 class DownloadController extends Controller {
     
     public function download(int $idMateriale)
@@ -64,6 +65,8 @@ class DownloadController extends Controller {
 
     public function downloadsUtente()
     {
-       //
+        $user = Auth::guard('studente')->user();
+        $materiali = StudenteRepository::trovaDownloads($user->id);
+        return view('studyroom.profile.risultati-ricerca-profilo', compact('user', 'materiali'));
     }
 }

@@ -18,7 +18,7 @@
         
         <!-- Stampiamo dinamicamente il messaggio passato dalla funzione abort() nel middleware -->
         <p>
-            {{'Non hai i permessi necessari per eseguire questa azione o accedere a questa pagina.' }}
+            {{'Il tuo account è stato sospeso contattare l\'assistenza per maggiori informazioni. ' }}
         </p>
         
         <div class="banned-actions">

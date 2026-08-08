@@ -36,6 +36,18 @@ class RecensioneController extends Controller
         return redirect()->back()->with('success', 'Recensione eliminata con successo!');
     }
 
+    public function modificaRecensione(Request $request, int $idRecensione) : redirectResponse{
+        $request->validate([
+            'commento'   => ['nullable', 'string', 'max:255'],
+            'voto'       => ['required', 'numeric', 'min:1', 'max:5'],
+        ]);
+        Recensione::where('id', $idRecensione)->update([
+            'voto'         => $request->voto,
+            'commento'     => $request->commento,
+        ]);
+        return redirect()->back()->with('success', 'Recensione modificata con successo!');
+    }
+
     public function recensioniMateriale(int $idMateriale){
         $user = null;
         if(Auth::guard('studente')->check()){ $user = Auth::guard('studente')->user(); }

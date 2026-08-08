@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('recensioni', function (Blueprint $table) {
             $table->id();
             $table->float('voto');
-            $table->string('commento', 255);
+            $table->string('commento', 255)->nullable();
             
             // Foreign keys con onDelete a cascata per il materiale e lo studente
             $table->foreignId('materiale_id')->constrained('materiali')->onDelete('cascade');

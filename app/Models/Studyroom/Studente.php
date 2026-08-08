@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Notifications\StudyroomVerifyEmail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Pagination\Paginator;
-
+use App\Notifications\Studyroom\VerifyEmailCustom;
 class Studente extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
@@ -68,7 +68,7 @@ class Studente extends Authenticatable implements MustVerifyEmail
 
 public function sendEmailVerificationNotification()
 {
- $this->notify(new StudyroomVerifyEmail);
+ $this->notify(new VerifyEmailCustom);
 }
 
 }

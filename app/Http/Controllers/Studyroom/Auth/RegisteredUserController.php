@@ -58,6 +58,6 @@ class RegisteredUserController extends Controller
 
         Auth::guard('studente')->login($user);
 
-        return redirect(route('studyroom.verification.notice', absolute: false));
+        return redirect(route('verification.notice', absolute: false));
     }
 }
