@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use App\Repositories\Studyroom\StudenteRepository;
+
 class ProfileController extends Controller
 {
 
@@ -111,5 +113,15 @@ class ProfileController extends Controller
 
         // 4. Reindirizziamo alla home del modulo
         return Redirect::to('home')->with('status', 'account-deleted');
+    }
+
+    public function caricatiUtente(Request $request): View
+    {
+        $user = Auth::guard('studente')->user();
+
+        $materiali = StudenteRepository::materialiCaricatiUtente($user->id);
+
+        return view('studyroom.profile.risultati-ricerca-profilo', compact('user', 'materiali'));
+
     }
 }

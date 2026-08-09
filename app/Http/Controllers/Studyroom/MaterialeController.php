@@ -13,6 +13,8 @@ use App\Models\Studyroom\Esame;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Studyroom\MaterialeRepository;
 use Illuminate\Http\RedirectResponse;
+use App\Models\Studyroom\Preferito;
+
 class MaterialeController extends Controller
 {
  public function show(){
@@ -127,7 +129,12 @@ class MaterialeController extends Controller
         if(!$materiale) {
             return redirect()->back();
         }
-        $preferito = $materiale->preferito !== null;
+
+        $preferito = Preferito::where([
+            'studente_id' => $user->id,
+            'materiale_id' => $id,
+        ])->exists();
+
         return view('studyroom.materiale.dettagli', compact('materiale', 'user', 'preferito'));
     }
 

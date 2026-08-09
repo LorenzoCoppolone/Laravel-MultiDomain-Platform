@@ -118,13 +118,14 @@ Route::prefix('studyroom')->name('studyroom.')->group(function () {
         Route::post('profile/cambia-password/successo', [PasswordController::class, 'update'])->name('profile.password.update');
         Route::get('profile/preferiti', [PreferitoController::class, 'preferitiUtente'])->name('profile.preferiti');    
         Route::get('profile/recensioni', [RecensioneController::class, 'recensioniUtente'])->name('profile.recensioni');
-        Route::get('profile/download', [DownloadController::class, 'downloadsUtente'])->name('profile.downloads');
+        Route::get('profile/downloads', [DownloadController::class, 'downloadsUtente'])->name('profile.downloads');
+        Route::get('profile/caricati', [ProfileController::class, 'caricatiUtente'])->name('profile.caricati');
 
 
         // Materiali per gli utenti loggati (studente o amministratore)
         Route::get('carica-materiale', [MaterialeController::class, 'show'])->name('materiali.show');
         Route::post('carica-materiale/salva', [MaterialeController::class, 'store'])->name('materiali.salva');
-        Route::post('materiale/salva-recensione', [RecensioneController::class, 'salvaRecensione'])->name('materiale.salva-recensione');
+        Route::post('materiale/salva-recensione/{idMateriale}', [RecensioneController::class, 'salvaRecensione'])->name('materiale.salva-recensione');
         Route::delete('materiale/elimina-recensione/{idRecensione}', [RecensioneController::class, 'eliminaRecensione'])->name('materiale.elimina-recensione');
         Route::put('materiale/modifica-recensione/{idRecensione}', [RecensioneController::class,'modificaRecensione'])->name('materiale.modifica-recensione');
         Route::get('materiale/download/{idMateriale}', [DownloadController::class, 'download'])->name('materiale.download');

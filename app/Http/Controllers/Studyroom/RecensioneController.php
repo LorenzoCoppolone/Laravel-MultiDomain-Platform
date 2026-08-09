@@ -11,26 +11,37 @@ use App\Repositories\Studyroom\StudenteRepository;
 use Illuminate\View\View;
 class RecensioneController extends Controller
 {
-   public function salvaRecensione(Request $request) : RedirectResponse
-{
+   public function salvaRecensione(Request $request, int $idMateriale) : RedirectResponse
+   {
+    // 1. Validazione (meglio usare 'integer' invece di 'numeric' per ID e voti)
     $request->validate([
-        'commento'   => ['nullable', 'string', 'max:255'], // Messo nullable se il commento è opzionale, oppure 'required' se obbligatorio
-        'voto'       => ['required', 'numeric', 'min:1', 'max:5'],
-        'idMateriale'=> ['required', 'numeric'],
+        'commento'    => ['nullable', 'string', 'max:255'], 
+        'voto'        => ['required', 'integer', 'min:1', 'max:5'],
     ]);
 
-    // Recuperiamo l'ID dello studente loggato
     $studenteId = Auth::guard('studente')->id();
 
+    // 2. Controllo duplicato (Corretto: idMateriale invece di id_materiale)
+    $recensioneEsistente = Recensione::where([
+        'studente_id'  => $studenteId,
+        'materiale_id' => $idMateriale,
+    ])->exists();
+
+    // 3. Se esiste già, blocchiamo subito l'esecuzione (Early Return)
+    if ($recensioneEsistente) {
+        return redirect()->back()->with('error', 'Hai già inserito una recensione per questo materiale.');
+    }
+
+    // 4. Altrimenti, procediamo con la creazione
     Recensione::create([
-        'materiale_id' => $request->idMateriale,
+        'materiale_id' => $idMateriale,
         'studente_id'  => $studenteId,
         'voto'         => $request->voto,
         'commento'     => $request->commento,
     ]);
 
     return redirect()->back()->with('success', 'Recensione inserita con successo!');
-}
+    }
     public function eliminaRecensione(int $idRecensione): RedirectResponse{
         Recensione::where('id', $idRecensione)->delete();
         return redirect()->back()->with('success', 'Recensione eliminata con successo!');

@@ -43,7 +43,7 @@
             <a href="{{route('studyroom.profile.recensioni') }}" class="section-link">
                 <i class="fa fa-star"></i> Mie recensioni
             </a>
-            <a href="{{ url('/studyroom/caricati') }}" class="section-link">
+            <a href="{{ route('studyroom.profile.caricati') }}" class="section-link">
                 <i class="fa fa-file-arrow-up"></i> Caricati
             </a>
         </nav>

@@ -112,4 +112,39 @@ class StudenteRepository extends Repository {
                 'c.nome_corso'
         ])->simplePaginate(10);
     }
+
+
+public static function materialiCaricatiUtente(int $id_studente): Paginator
+{
+    // Usiamo DB::table (o Materiale::query()) con la logica SQL esplicita
+    return DB::table('materiali') 
+        ->select([
+            'materiali.id as idMateriale',
+            'materiali.titolo as titoloMateriale',
+            'insegnamenti.nome_insegnamento as insegnamento',
+            'corsidilaurea.nome_corso as corso_di_laurea',
+            'studenti.username as nome_studente',
+            DB::raw("UPPER(materiali.tipo) as tipologia"), 
+            DB::raw('COUNT(DISTINCT downloads.id) as numeroDownload'),
+            DB::raw('COUNT(DISTINCT recensioni.id) as numeroRecensioni'),
+            DB::raw('AVG(recensioni.voto) as mediaValutazione')
+        ])
+        ->join('studenti', 'materiali.studente_id', '=', 'studenti.id')
+        ->join('insegnamenti', 'materiali.insegnamento_id', '=', 'insegnamenti.id')
+        ->join('corsidilaurea', 'insegnamenti.corso_di_laurea_codice', '=', 'corsidilaurea.codice_corso')
+        ->leftJoin('downloads', 'materiali.id', '=', 'downloads.materiale_id')
+        ->leftJoin('recensioni', 'materiali.id', '=', 'recensioni.materiale_id')
+        ->where('materiali.studente_id', $id_studente)
+        ->groupBy(
+            'materiali.id', 
+            'materiali.titolo', 
+            'insegnamenti.nome_insegnamento', 
+            'corsidilaurea.nome_corso', 
+            'studenti.username',
+            'materiali.tipo'
+        )
+        ->orderByDesc('numeroDownload')
+        ->orderByDesc('numeroRecensioni')
+        ->simplePaginate(10); 
+    }
 }

@@ -14,11 +14,18 @@
 @endsection
 
 @section('content')
+{{-- Toast di esito (successo/errore manuale/errore di validazione) --}}
+@if (session('success') || session('error') || $errors->any())
+    @php
+        // Determiniamo se è un successo
+        $isSuccess = session()->has('success');
+        
+        // Diamo priorità al successo, poi all'errore manuale, poi al primo errore di validazione
+        $messaggio = session('success') ?? session('error') ?? $errors->first();
+    @endphp
 
-{{-- Toast di esito (successo/errore) tramite flash message in sessione --}}
-@if (session('success') || session('error'))
-    <div id="popup-preferiti" class="popup {{ session('success') ? 'popup-successo' : 'popup-errore' }}">
-        <span class="popup-messaggio">{{ session('success') ?? session('error') }}</span>
+    <div id="popup-preferiti" class="popup {{ $isSuccess ? 'popup-successo' : 'popup-errore' }}">
+        <span class="popup-messaggio">{{ $messaggio }}</span>
     </div>
 @endif
 
@@ -109,10 +116,8 @@
                     <summary class="btn-azione">
                         <i class="fa fa-star"></i> Lascia una recensione
                     </summary>
-                    <form class="materiale-form" action="{{ route('studyroom.materiale.salva-recensione') }}" method="POST">
+                    <form class="materiale-form" action="{{ route('studyroom.materiale.salva-recensione', $materiale->idMateriale ) }}" method="POST">
                         @csrf
-                        <input type="hidden" name="idMateriale" value="{{ $materiale->idMateriale }}">
-
                         <label for="voto">Voto</label>
                         <select id="voto" name="voto" required>
                             <option value="">Seleziona un voto</option>
