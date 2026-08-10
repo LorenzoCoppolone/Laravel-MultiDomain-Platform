@@ -21,7 +21,7 @@ use App\Http\Controllers\Studyroom\DownloadController;
 use Illuminate\Support\Facades\Auth;
 
 // 1. ROTTE DI VERIFICA EMAIL SI USA QUELLA DEL FRAMEWORK, NON QUELLA DI STUDYROOM
-Route::prefix('studyroom')->middleware(['auth:studente,amministratore'])->group(function () {
+Route::prefix('studyroom')->middleware(['auth:studente'])->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
         ->middleware(['signed', 'throttle:6,1'])
@@ -34,6 +34,12 @@ Route::prefix('studyroom')->middleware(['auth:studente,amministratore'])->group(
 
 
 
+// Rotte ADMIN
+Route::prefix('studyroom/admin')->name('studyroom.admin.')->middleware(['auth:amministratore'])->group(function () {
+    Route::get('dashboard', function () {
+    return view('studyroom.admin.dashboard');
+    })->name('dashboard');
+});
 
 
 
@@ -130,6 +136,6 @@ Route::prefix('studyroom')->name('studyroom.')->group(function () {
         Route::put('materiale/modifica-recensione/{idRecensione}', [RecensioneController::class,'modificaRecensione'])->name('materiale.modifica-recensione');
         Route::get('materiale/download/{idMateriale}', [DownloadController::class, 'download'])->name('materiale.download');
         Route::post('materiale/preferiti', [PreferitoController::class, 'crea'])->name('materiale.preferiti');
-        Route::post('materiale/aggiungi-segnalazione', [SegnalazioneController::class, 'aggiungiSegnalazione'])->name('materiale.aggiungi-segnalazione');   
+        Route::post('materiale/aggiungi-segnalazione/{idMateriale}', [SegnalazioneController::class, 'salvaSegnalazione'])->name('materiale.aggiungi-segnalazione');   
     });
 });

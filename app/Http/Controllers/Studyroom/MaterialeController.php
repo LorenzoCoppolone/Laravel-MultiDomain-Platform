@@ -61,7 +61,7 @@ class MaterialeController extends Controller
             Esame::create($datiMateriale);
         }
 
-        return redirect()->back()->with('status', 'Materiale caricato con successo!');
+        return redirect()->back()->with('success', 'Materiale caricato con successo!');
     }
 
     public function popolari(): View
@@ -130,11 +130,14 @@ class MaterialeController extends Controller
             return redirect()->back();
         }
 
+        if(isset($user->id)) {
         $preferito = Preferito::where([
             'studente_id' => $user->id,
             'materiale_id' => $id,
         ])->exists();
-
+        }else{
+            $preferito = false;
+        }
         return view('studyroom.materiale.dettagli', compact('materiale', 'user', 'preferito'));
     }
 

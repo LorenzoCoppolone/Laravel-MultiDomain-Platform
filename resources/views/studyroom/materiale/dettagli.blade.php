@@ -143,7 +143,7 @@
                     <summary class="btn-azione btn-azione--danger">
                         <i class="fa fa-flag"></i> Segnala materiale
                     </summary>
-                    <form class="materiale-form" action="{{ route('studyroom.materiale.aggiungi-segnalazione') }}" method="POST">
+                    <form class="materiale-form" action="{{ route('studyroom.materiale.aggiungi-segnalazione', $materiale->idMateriale) }}" method="POST">
                         @csrf
                         <input type="hidden" name="idMateriale" value="{{ $materiale->idMateriale }}">
 

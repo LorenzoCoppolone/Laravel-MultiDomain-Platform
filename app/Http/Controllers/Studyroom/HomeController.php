@@ -12,7 +12,6 @@ class HomeController extends Controller {
     $user = null;
 
     if(Auth::guard('studente')->check()) $user = Auth::guard('studente')->user();
-    
     return view('studyroom.layouts.home', compact('user'));
     }
 }

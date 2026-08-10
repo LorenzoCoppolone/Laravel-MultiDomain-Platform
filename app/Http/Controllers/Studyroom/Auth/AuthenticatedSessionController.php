@@ -27,10 +27,15 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(route('studyroom.home', absolute: false));
+        if (Auth::guard('studente')->check()) {
+            return redirect()->intended(route('studyroom.home', absolute: false));
+        }else if(Auth::guard('amministratore')->check()){
+            return redirect()->intended(route('studyroom.admin.dashboard'));
+        }else{
+            return redirect(route('studyroom.login', absolute: false));
+        }
     }
-
+    
     /**
      * Destroy an authenticated session.
      */
