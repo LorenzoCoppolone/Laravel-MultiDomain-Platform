@@ -19,7 +19,7 @@ use App\Http\Controllers\Studyroom\RecensioneController;
 use App\Http\Controllers\Studyroom\SegnalazioneController;
 use App\Http\Controllers\Studyroom\DownloadController;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\Studyroom\AdminController;
 // 1. ROTTE DI VERIFICA EMAIL SI USA QUELLA DEL FRAMEWORK, NON QUELLA DI STUDYROOM
 Route::prefix('studyroom')->middleware(['auth:studente'])->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
@@ -36,9 +36,9 @@ Route::prefix('studyroom')->middleware(['auth:studente'])->group(function () {
 
 // Rotte ADMIN
 Route::prefix('studyroom/admin')->name('studyroom.admin.')->middleware(['auth:amministratore'])->group(function () {
-    Route::get('dashboard', function () {
-    return view('studyroom.admin.dashboard');
-    })->name('dashboard');
+    Route::get('dashboard',[AdminController::class, 'dashboard'])->name('dashboard');
+    Route::post('gestisci-segnalazione/{idMateriale}', [AdminController::class, 'gestisciSegnalazione'])->name('gestisci-segnalazione');
+
 });
 
 
