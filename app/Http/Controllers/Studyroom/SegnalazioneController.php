@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Studyroom\Segnalazione;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 class SegnalazioneController extends Controller
 {
     public function salvaSegnalazione(Request $request, int $idMateriale) : RedirectResponse{
@@ -33,5 +35,11 @@ class SegnalazioneController extends Controller
     Segnalazione::Create($datiSegnalazione);
 
     return redirect()->back()->with("success","Segnalazione inviata con successo!");
+    }
+
+    public  function gestisciSegnalazione(int $idMateriale) : View {
+        $materiale = DB::table("materiali")->select("id AS idMateriale", "titolo")->where(["id"=>$idMateriale])->first();
+        $utente = DB::table("materiali")->join("studenti", "materiali.studente_id", "=", "studenti.id")->where(['materiali.id'=>$idMateriale])->first();
+        return view("studyroom.admin.gestisciSegnalazione", compact("materiale" ,"utente"));
     }
 }

@@ -20,6 +20,7 @@ use App\Http\Controllers\Studyroom\SegnalazioneController;
 use App\Http\Controllers\Studyroom\DownloadController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Studyroom\AdminController;
+use App\Http\Controllers\Studyroom\StudenteController;
 // 1. ROTTE DI VERIFICA EMAIL SI USA QUELLA DEL FRAMEWORK, NON QUELLA DI STUDYROOM
 Route::prefix('studyroom')->middleware(['auth:studente'])->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
@@ -37,8 +38,12 @@ Route::prefix('studyroom')->middleware(['auth:studente'])->group(function () {
 // Rotte ADMIN
 Route::prefix('studyroom/admin')->name('studyroom.admin.')->middleware(['auth:amministratore'])->group(function () {
     Route::get('dashboard',[AdminController::class, 'dashboard'])->name('dashboard');
-    Route::post('gestisci-segnalazione/{idMateriale}', [AdminController::class, 'gestisciSegnalazione'])->name('gestisci-segnalazione');
-
+    Route::get('gestisci-segnalazione/{idMateriale}', [SegnalazioneController::class, 'gestisciSegnalazione'])->name('gestisci-segnalazione');
+    Route::post('banna-utente/{idUtente}', [StudenteController::class,'bannaUtente'])->name('utente.banna-utente');
+    Route::get('segnalazioni/motivi/{idMateriale}', [SegnalazioneController::class,'visualizzaMotivi'])->name('segnalazioni.motivi');
+    Route::post('elimina-materiale/{idMateriale}', [MaterialeController::class,'eliminaMateriale'])->name('materiale.elimina');
+    Route::post('elimina-segnalazioni/{idMateriale}', [SegnalazioneController::class,'eliminaSegnalazioni'])->name('segnalazioni.annulla');
+    
 });
 
 

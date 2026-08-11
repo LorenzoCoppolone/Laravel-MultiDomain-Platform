@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('tipo'); // Colonna discriminante per il Single Table Inheritance
             
             // File mappato come BLOB (puoi usare longBinary() se i file sono molto grandi)
-            $table->mediumBlob('file_Contenuto');
+            $table->binary('file_Contenuto');
             $table->string('file_mimeType');
             
             $table->string('tag')->nullable(); // solo per appunto
@@ -29,6 +29,8 @@ return new class extends Migration
             
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE materiali MODIFY file_Contenuto MEDIUMBLOB");
     }
 
     /**

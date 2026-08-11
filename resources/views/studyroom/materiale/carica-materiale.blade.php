@@ -28,8 +28,8 @@
     @if(session('error') || isset($errore))
         <x-alert type="danger" :message="session('error') ?? $errore" />
     @endif
-    @if(session('status'))
-        <x-alert type="success" :message="session('status')" />
+    @if(session('success'))
+        <x-alert type="success" :message="session('success')" />
     @endif
 
     <!-- TIPO DOCUMENTO -->
