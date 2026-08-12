@@ -12,16 +12,24 @@
     <!-- CSS di Laravel tramite Vite -->
     @vite([
         'resources/css/studyroom/styleAdmin.css',
-        'resources/css/components/pagination.css'
+        'resources/css/components/pagination.css',
+        'resources/css/components/alert.css'
     ])
+
+    @if(session('error') || isset($errore))
+        <x-alert type="danger" :message="session('error') ?? $errore" />
+    @endif
+    @if(session('success'))
+        <x-alert type="success" :message="session('success')" />
+    @endif
+    
 </head>
 <body>
 
     <!-- ===================== HEADER ADMIN ===================== -->
-    <header class="admin-header">
-        <span class="logo">StudyRoom</span>
-        
-        <!-- In Laravel il logout è protetto da CSRF, quindi usiamo un form -->
+     <header class="admin-header">
+        <a href="{{ route('studyroom.admin.dashboard') }}" class="logo">StudyRoom</a>
+
         <form method="POST" action="{{ route('studyroom.logout') }}" style="margin: 0;">
             @csrf
             <button type="submit" class="btn-logout" style="background: transparent; border: none; font: inherit; cursor: pointer; color: inherit;">

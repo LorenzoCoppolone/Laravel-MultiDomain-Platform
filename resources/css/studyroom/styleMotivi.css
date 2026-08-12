@@ -1,0 +1,106 @@
+/* Limita la larghezza massima per una migliore leggibilità dei testi lunghi */
+.motivi-container {
+    max-width: 800px;
+}
+
+.subtitle {
+    color: var(--dark);
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.subtitle strong {
+    color: var(--dark);
+}
+
+/* ── LAYOUT LISTA ── */
+.motivi-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* ── STILE CARD MOTIVO ── */
+.motivo-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.motivo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(108, 79, 212, 0.15);
+}
+
+/* ── HEADER DELLA CARD (Username e Data) ── */
+.motivo-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--purple-light);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.motivo-card__user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.motivo-card__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--purple-light);
+    color: var(--purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.motivo-card__username {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+}
+
+.motivo-card__date {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+/* ── CORPO DELLA CARD (Testo) ── */
+.motivo-card__body p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0;
+    word-break: break-word; /* Evita che testi lunghi sfascino il layout */
+}
+
+/* ── STATO VUOTO ── */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    background: var(--card);
+    border: 1.5px dashed var(--border);
+    border-radius: 16px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    color: var(--purple-light);
+    margin-bottom: 1rem;
+}

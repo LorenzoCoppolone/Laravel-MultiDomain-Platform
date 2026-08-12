@@ -21,6 +21,7 @@
     @if(session('success'))
         <x-alert type="success" :message="session('success')" />
     @endif
+    
 </head>
 <body>
 
@@ -36,12 +37,7 @@
         </form>
     </header>
     <!-- ===================== /HEADER ADMIN ===================== -->
-
     <main class="admin-dashboard">
-
-        <a href="{{ route('studyroom.admin.dashboard') }}" class="back-link">
-            <i class="fa fa-arrow-left"></i> Torna alla dashboard
-        </a>
 
         <h1 class="page-title">Gestisci Segnalazione</h1>
 
