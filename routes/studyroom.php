@@ -41,7 +41,7 @@ Route::prefix('studyroom/admin')->name('studyroom.admin.')->middleware(['auth:am
     Route::get('gestisci-segnalazione/{idMateriale}', [SegnalazioneController::class, 'gestisciSegnalazione'])->name('gestisci-segnalazione');
     Route::post('banna-utente/{idUtente}', [StudenteController::class,'bannaUtente'])->name('utente.banna-utente');
     Route::get('segnalazioni/motivi/{idMateriale}', [SegnalazioneController::class,'visualizzaMotivi'])->name('segnalazioni.motivi');
-    Route::post('elimina-materiale/{idMateriale}', [MaterialeController::class,'eliminaMateriale'])->name('materiale.elimina');
+    Route::delete('elimina-materiale/{idMateriale}', [MaterialeController::class,'eliminaMateriale'])->name('materiale.elimina');
     Route::post('elimina-segnalazioni/{idMateriale}', [SegnalazioneController::class,'eliminaSegnalazioni'])->name('segnalazioni.annulla');
     
 });

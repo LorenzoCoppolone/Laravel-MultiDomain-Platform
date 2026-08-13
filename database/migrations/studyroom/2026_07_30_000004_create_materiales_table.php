@@ -23,9 +23,9 @@ return new class extends Migration
             $table->string('tag')->nullable(); // solo per appunto
 
             
-            // Foreign Keys con eliminazione a cascata
-            $table->foreignId('insegnamento_id')->constrained('insegnamenti')->onDelete('cascade');
-            $table->foreignId('studente_id')->constrained('studenti')->onDelete('cascade');
+            // Foreign Keys, non devono essere eliminate a cascata
+            $table->foreignId('insegnamento_id')->constrained('insegnamenti')->onDelete('restrict');
+            $table->foreignId('studente_id')->constrained('studenti')->onDelete('restrict');
             
             $table->timestamps();
         });

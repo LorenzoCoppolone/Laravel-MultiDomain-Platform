@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\Studyroom\MaterialeRepository;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Studyroom\Preferito;
-
 class MaterialeController extends Controller
 {
  public function show(){
@@ -178,6 +177,11 @@ public function stream(int $id)
     return response($contenuto)
         ->header('Content-Type', $mimeType)
         ->header('Content-Disposition', 'inline; filename="' . $safeTitle . '.pdf"');
+}
+
+public function eliminaMateriale(int $idMateriale): RedirectResponse{
+    DB::table('materiali')->where('id', $idMateriale)->delete();
+    return redirect()->route('studyroom.admin.dashboard')->with("success","Materiale eliminato con successo!");
 }
     
 }
