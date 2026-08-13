@@ -29,59 +29,50 @@
 
         <h2>Reimposta Password</h2>
 
-        <form method="POST" action="{{ route('studyroom.profile.password.update') }}">
-            @csrf
+    <form method="POST" action="{{ route('studyroom.profile.password.update') }}">
+    @csrf
 
-            <!-- PASSWORD CORRENTE -->
-            <x-form-input 
-                type="password" 
-                name="current_password" 
-                id="currentPassword" 
-                placeholder="Password corrente" 
-                icon="bx bx-lock-alt toggle-password"
-                toggleId="toggleCurrent" 
-                required 
-            />
-            @error('current_password', 'updatePassword')
-                <span class="msg-errore">{{ $message }}</span>
-            @enderror
-
-            <!-- NUOVA PASSWORD -->
-            <x-form-input 
-                type="password" 
-                name="password" 
-                id="password" 
-                placeholder="Nuova password" 
-                icon="bx bx-show toggle-password"
-                toggleId="togglePassword" 
-                required 
-            />
+    <!-- PASSWORD CORRENTE -->
+    <div class="campo-input">
+        <input type="password" placeholder="Password Attuale" name="current_password" id="current_password" required>
+        <i class="bx bx-show toggle-password"></i>
+    </div>
+    @error('current_password', 'updatePassword')
+        <span class="msg-errore">{{ $message }}</span>
+    @enderror
+<!-- NUOVA PASSWORD -->
+            <div class="campo-input">
+                <input type="password" placeholder="Nuova Password" name="password" id="password" required>
+                <i class="bx bx-show toggle-password"></i>
+            </div>
             @error('password', 'updatePassword')
                 <span class="msg-errore">{{ $message }}</span>
             @enderror
 
             <!-- CONFERMA PASSWORD -->
-            <x-form-input 
-                type="password" 
-                name="password_confirmation" 
-                id="confermaPassword" 
-                placeholder="Conferma Password" 
-                icon="bx bx-show toggle-password"
-                toggleId="toggleConferma" 
-                required 
-            />
+            <div class="campo-input">
+                <!-- Il 'name' serve a Laravel, l' 'id' serve al nostro file JS -->
+                <input type="password" placeholder="Conferma Password" name="password_confirmation" id="confermaPassword" required>
+                <i class="bx bx-show toggle-password"></i>
+            </div>
+            
+            <!-- QUI APPARE IL MESSAGGIO JS (COINCIDONO/NON COINCIDONO) -->
+            <span id="err-conferma" class="msg-errore" style="display:block; text-align:center; font-size:0.9rem; margin-top:5px; margin-bottom:10px;"></span>
+    <!-- ERRORE GLOBALE -->
+    @if(session('status') === 'password-updated')
+        <span class="msg-successo" style="text-align: center; margin-bottom: 15px; color: green; display:block;">
+            Password aggiornata con successo!
+        </span>
+    @else
+        <span class="msg-errore" style="text-align: center; margin-bottom: 15px; color: red; display:block;">
+            Password non aggiornata, ricorda che la password non può essere uguale a quella corrente!
+        </span>
+    @endif
 
-            <!-- ERRORE GLOBALE -->
-            @if(session('status') === 'password-updated')
-                <span class="msg-successo" style="text-align: center; margin-bottom: 15px; color: green;">
-                    Password aggiornata con successo!
-                </span>
-            @endif
+    <!-- BOTTONE -->
+    <button type="submit" class="btn">Reimposta</button>
 
-            <!-- BOTTONE -->
-            <button type="submit" class="btn">Reimposta</button>
-
-        </form>
+    </form>
         <!-- LINK HOME -->
         <p class="registrazione" style="margin-top: 8px;">
             Torna alla <a href="{{ route('studyroom.home') }}">Home</a>

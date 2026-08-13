@@ -32,24 +32,24 @@
         <form method="POST" action="{{ route('studyroom.password.store') }}">
             @csrf
 
-            <!-- Token e Email nascosti (Richiesti dal controller nativo di Laravel) -->
+            <!-- Token e Email nascosti -->
             <input type="hidden" name="token" value="{{ $request->route('token') }}">
             <input type="hidden" name="email" value="{{ old('email', $request->email) }}">
 
              <!-- Password (mantenuta estesa per via del JS custom togglePassword) -->
                 <div class="campo-input">
-                    <input type="password" placeholder="Password" name="password" id="password" minlength="8" title="Minimo 8 caratteri" required>
+                    <input type="password" placeholder="Password" name="password" id="password" required>
                     <i class="bx bx-show toggle-password" id="togglePassword"></i>
                 </div>
-                @error('password')<span class="msg-errore">{{ $message }}</span>@enderror
+                @error('password')<span class="msg-errore">{{ "La password non puo' essere vuota" }}</span>@enderror
 
                 <!-- Conferma Password (Nome modificato in password_confirmation per Laravel) -->
                 <div class="campo-input">
-                    <input type="password" placeholder="Conferma Password" name="password_confirmation" id="confermaPassword" required>
-                    <i class="bx bx-show toggle-password" id="toggleConferma"></i>
+                    <input type="password" placeholder="Conferma Password" name="password" id="password" required>
+                    <i class="bx bx-show toggle-password" id="togglePassword"></i>
                 </div>
                 <span class="msg-errore" id="err-conferma"></span>
-                @error('password_confirmation')<span class="msg-errore">{{ $message }}</span>@enderror
+                @error('password_confirmation')<span class="msg-errore">{{ "Devi confermare la password" }}</span>@enderror
 
             
             <!-- SPAN PER IL JS (Deve esserci altrimenti il JS va in crash) -->

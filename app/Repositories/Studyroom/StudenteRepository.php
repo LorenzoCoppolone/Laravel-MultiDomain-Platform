@@ -32,7 +32,8 @@ class StudenteRepository extends Repository {
                         WHEN materiale.tipo = 'esame' THEN 'ESAME'
                         ELSE 'ALTRO'
                     END AS tipologia
-                ")
+                "),
+                'materiale.tag as tag'
             ])
             ->join('materiali AS materiale', 'p.materiale_id', '=', 'materiale.id')
             ->join('insegnamenti AS i', 'materiale.insegnamento_id', '=', 'i.id')
@@ -63,7 +64,7 @@ class StudenteRepository extends Repository {
                 'materiale.id AS idMateriale',
                 'materiale.titolo AS titoloMateriale',
                 'r.voto',
-                'r.commento'
+                'r.commento',
             ])
             // Ci basta solo la join con i materiali per recuperare il titolo
             ->join('materiali AS materiale', 'r.materiale_id', '=', 'materiale.id')
@@ -96,7 +97,8 @@ class StudenteRepository extends Repository {
                         WHEN materiale.tipo = 'esame' THEN 'ESAME'
                         ELSE 'ALTRO'
                     END AS tipologia
-                ")
+                "),
+                'materiale.tag as tag'
             ])
             ->join('materiali AS materiale', 'd.materiale_id', '=', 'materiale.id')
             ->join('insegnamenti AS i', 'materiale.insegnamento_id', '=', 'i.id')
@@ -127,7 +129,8 @@ public static function materialiCaricatiUtente(int $id_studente): Paginator
             DB::raw("UPPER(materiali.tipo) as tipologia"), 
             DB::raw('COUNT(DISTINCT downloads.id) as numeroDownload'),
             DB::raw('COUNT(DISTINCT recensioni.id) as numeroRecensioni'),
-            DB::raw('AVG(recensioni.voto) as mediaValutazione')
+            DB::raw('AVG(recensioni.voto) as mediaValutazione'),
+            'materiali.tag as tag'
         ])
         ->join('studenti', 'materiali.studente_id', '=', 'studenti.id')
         ->join('insegnamenti', 'materiali.insegnamento_id', '=', 'insegnamenti.id')
