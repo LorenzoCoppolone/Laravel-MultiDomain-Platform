@@ -132,12 +132,17 @@
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
 }
-
 .materiale-meta li {
     display: grid;
     grid-template-columns: 1.4rem auto 1fr;
     align-items: center;
-    gap: 0.5rem;
+    gap: 10px;
+}
+
+.materiale-meta__value-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
 }
 
 .materiale-meta i {
@@ -155,6 +160,11 @@
     font-weight: 600;
     color: var(--color-text);
     text-align: right;
+}
+
+/*Serve per far si che se manca l'icona iniziale l'allineamento sia comunque corretto*/
+.materiale-meta li .materiale-meta__label:first-child {
+    grid-column: 2;
 }
 
 /* Valutazione + download */

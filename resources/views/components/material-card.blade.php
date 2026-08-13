@@ -39,7 +39,11 @@
         <h2 class="card__title">{{ $mat->titoloMateriale }}</h2>
         <p class="card__meta">{{ $mat->insegnamento }}</p>
         <p class="card__meta">{{ $mat->corso_di_laurea }}</p>
-        <p class="card__meta card__meta--tipo">{{ $mat->tipologia }}</p>
+        <p class="card__meta card__meta--tipo">{{ $mat->tipologia }}
+            @if($mat->tipologia == 'APPUNTO')
+                <span class="card__meta">({{ $mat->tag }})</span>
+            @endif
+        </p>
 
        <x-star-rating :media="$mat->mediaValutazione ?? 0">
             @if($reviewsRoute)

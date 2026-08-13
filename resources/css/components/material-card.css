@@ -20,7 +20,7 @@
 .star { font-size: 1.05rem; line-height: 1; }
 .star--full { color: #f5a623; }
 .star--empty { color: #d9d9e3; }
-.card__rating-count { position: relative; z-index: 2; font-size: 0.8rem; color: var(--color-text-muted); margin-left: 0.35rem; text-decoration: none; cursor: pointer; transition: color 0.2s ease; }
+.card__rating-count { position: relative; font-size: 0.8rem; color: var(--color-text-muted); margin-left: 0.35rem; text-decoration: none; cursor: pointer; transition: color 0.2s ease; }
 .card__rating-count:hover, .card__rating-count:focus-visible { color: var(--color-primary); text-decoration: underline; font-weight: 600; outline: none; }
 .card__downloads { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; font-weight: 500; color: var(--color-text-muted); }
 .card__downloads svg { width: 15px; height: 15px; stroke: var(--color-text-muted); }

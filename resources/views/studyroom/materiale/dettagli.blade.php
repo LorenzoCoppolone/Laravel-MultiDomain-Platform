@@ -72,6 +72,18 @@
                     <span class="materiale-meta__label">Corso di Laurea</span>
                     <span class="materiale-meta__value">{{ $materiale->corso_di_laurea }}</span>
                 </li>
+
+                <li>
+                    <i class="fa-solid fa-tag"></i>
+                <span class="materiale-meta__label">Tipologia</span>
+                <div class="materiale-meta__value-group">
+                <span class="materiale-meta__value">{{ $materiale->tipologia }}</span>
+                    @if($materiale->tipologia == 'APPUNTO')
+                        <span class="materiale-meta__value">({{ $materiale->tag }})</span>
+                    @endif
+                </div>
+            </li>
+
             </ul>
 
             <!-- Valutazione + download -->

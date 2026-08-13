@@ -30,7 +30,8 @@ class MaterialeRepository extends Repository {
                     WHEN materiale.tipo = 'esame' THEN 'ESAME'
                     ELSE 'ALTRO'
                 END AS tipologia
-            ")
+            "),
+            'materiale.tag as tag'
         ])
         ->leftJoin('downloads AS d', 'materiale.id', '=', 'd.materiale_id')
         ->leftJoin('recensioni AS r', 'materiale.id', '=', 'r.materiale_id')
@@ -66,7 +67,8 @@ public static function ricercaFiltrata(array $filtri = []): Paginator
                     WHEN materiale.tipo = 'esame' THEN 'ESAME'
                     ELSE 'ALTRO'
                 END AS tipologia
-            ")
+            "),
+            'materiale.tag as tag'
         ])
         ->leftJoin('downloads AS d', 'materiale.id', '=', 'd.materiale_id')
         ->leftJoin('recensioni AS r', 'materiale.id', '=', 'r.materiale_id')
@@ -140,7 +142,8 @@ public static function ricercaFiltrata(array $filtri = []): Paginator
                         WHEN materiale.tipo = 'esame' THEN 'ESAME'
                         ELSE 'ALTRO'
                     END AS tipologia
-                ")
+                "),
+                'materiale.tag as tag'
             ])
             // Join base per corso e insegnamento
             ->join('insegnamenti AS i', 'materiale.insegnamento_id', '=', 'i.id')
