@@ -61,7 +61,7 @@
                 <!-- Password (Mantenuta in HTML esplicito per l'ID togglePassword del file JS) -->
                 <div class="campo-input">
                     <input type="password" placeholder="Password" name="password" id="password" required>
-                    <i class="bx bx-show toggle-password" id="togglePassword"></i>
+                    <i class="bx bx-show toggle-password"></i>
                 </div>
 
                 <div class="Ricordami">

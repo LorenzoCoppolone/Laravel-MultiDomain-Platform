@@ -36,21 +36,23 @@
             <input type="hidden" name="token" value="{{ $request->route('token') }}">
             <input type="hidden" name="email" value="{{ old('email', $request->email) }}">
 
-             <!-- Password (mantenuta estesa per via del JS custom togglePassword) -->
-                <div class="campo-input">
-                    <input type="password" placeholder="Password" name="password" id="password" required>
-                    <i class="bx bx-show toggle-password" id="togglePassword"></i>
-                </div>
-                @error('password')<span class="msg-errore">{{ "La password non puo' essere vuota" }}</span>@enderror
+            <div class="campo-input">
+                <input type="password" placeholder="Nuova Password" name="password" id="password" required>
+                <i class="bx bx-show toggle-password"></i>
+            </div>
+            @error('password', 'updatePassword')
+                <span class="msg-errore">{{ $message }}</span>
+            @enderror
 
-                <!-- Conferma Password (Nome modificato in password_confirmation per Laravel) -->
-                <div class="campo-input">
-                    <input type="password" placeholder="Conferma Password" name="password" id="password" required>
-                    <i class="bx bx-show toggle-password" id="togglePassword"></i>
-                </div>
-                <span class="msg-errore" id="err-conferma"></span>
-                @error('password_confirmation')<span class="msg-errore">{{ "Devi confermare la password" }}</span>@enderror
-
+            <!-- CONFERMA PASSWORD -->
+            <div class="campo-input">
+                <!-- Il 'name' serve a Laravel, l' 'id' serve al nostro file JS -->
+                <input type="password" placeholder="Conferma Password" name="password_confirmation" id="confermaPassword" required>
+                <i class="bx bx-show toggle-password"></i>
+            </div>
+            
+            <!-- QUI APPARE IL MESSAGGIO JS (COINCIDONO/NON COINCIDONO) -->
+            <span id="err-conferma" class="msg-errore" style="display:block; text-align:center; font-size:0.9rem; margin-top:5px; margin-bottom:10px;"></span>
             
             <!-- SPAN PER IL JS (Deve esserci altrimenti il JS va in crash) -->
             <span id="err-conferma" class="msg-errore" style="text-align: center; display: block; margin-bottom:15px;"></span>

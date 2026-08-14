@@ -59,13 +59,15 @@
             <!-- QUI APPARE IL MESSAGGIO JS (COINCIDONO/NON COINCIDONO) -->
             <span id="err-conferma" class="msg-errore" style="display:block; text-align:center; font-size:0.9rem; margin-top:5px; margin-bottom:10px;"></span>
     <!-- ERRORE GLOBALE -->
+    <!-- MESSAGGI GLOBALI -->
     @if(session('status') === 'password-updated')
         <span class="msg-successo" style="text-align: center; margin-bottom: 15px; color: green; display:block;">
             Password aggiornata con successo!
-        </span>
-    @else
+        </span>  
+    {{-- Controlla se ci sono errori nel tentativo di aggiornamento --}}
+    @elseif($errors->updatePassword->any() || $errors->any())
         <span class="msg-errore" style="text-align: center; margin-bottom: 15px; color: red; display:block;">
-            Password non aggiornata, ricorda che la password non può essere uguale a quella corrente!
+            Password non aggiornata. Verifica i dati (ricorda che la nuova password non può essere uguale a quella corrente!).
         </span>
     @endif
 

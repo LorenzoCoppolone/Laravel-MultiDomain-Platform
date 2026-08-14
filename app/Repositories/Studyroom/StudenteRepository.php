@@ -118,7 +118,7 @@ class StudenteRepository extends Repository {
 
 public static function materialiCaricatiUtente(int $id_studente): Paginator
 {
-    // Usiamo DB::table (o Materiale::query()) con la logica SQL esplicita
+    // Usiamo DB::table
     return DB::table('materiali') 
         ->select([
             'materiali.id as idMateriale',
