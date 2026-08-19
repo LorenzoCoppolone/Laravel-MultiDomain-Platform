@@ -42,7 +42,7 @@ return [
             'provider' => 'users',
         ],
 
-        // --- I TUOI NUOVI GUARDS ---
+        // GUARDS PER STUDYROOM
         'studente' => [
             'driver' => 'session',
             'provider' => 'studenti', // Punta al provider qui sotto
@@ -52,6 +52,8 @@ return [
             'driver' => 'session',
             'provider' => 'amministratori',
         ],
+
+        // AGGIUNGI QUI ULTERIORI GUARDS
     ],
 
     /*
@@ -77,7 +79,7 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // --- I TUOI NUOVI PROVIDERS ---
+        // ---PROVIDERS PER STUDYROOM
         'studenti' => [
             'driver' => 'eloquent',
             'model' => App\Models\studyroom\Studente::class, // Punta al tuo nuovo Model!
@@ -87,6 +89,8 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\studyroom\Amministratore::class,
         ],
+
+        // AGGIUNGI QUI ULTERIORI PROVIDERS
     ],
 
     /*
@@ -115,12 +119,17 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        
+        //  RESET PASSWORDS PER STUDYROOM
         'studenti' => [
             'provider' => 'studenti',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,
         ],
+
+        // AGGIUNGI QUI ULTERIORI RESET PASSWORDS
+        
     ],
 
     /*

@@ -71,8 +71,8 @@ routes/
   affitti.php
 
 
-Poiché questo progetto prevede l'integrazione di più moduli bisogna mantenere coerente la UI, per questo motivo all'interno del file
-app.css troviamo tutto il css "comune" mentre dentro components troviamo i template, ciò significa che se si necessita di uno dei componenti presenti dentro components e bene utilizzare quelli.
+Poiché questo progetto prevede l'integrazione di più moduli bisogna mantenere coerente la UI, per questo motivo all'interno del package
+resources/css/components/... troviamo tutto il css "comune" mentre dentro resources/views/components troviamo i template, ciò significa che prima di sviluppare il proprio modulo e bene studiare cosa vi è all'interno.
 
 Per generare questa struttura è sufficiente lanciare da terminale i seguenti comandi:
 php artisan make:controller <NomeModulo>/<Nome>Controller
@@ -89,3 +89,15 @@ php artisan migrate     (effettua la migrazione delle tabelle generiche)
 php artisan migrate --path=database/migrations/<NomeModulo>     (effettua la migrazione delle tabelle del dominio di interesse)
 
 Nota: analogamente il roolback necessita della stessa logica: php artisan migrate:rollback --path=....
+
+
+
+Ora verrà spiegato brevemente come configurare il framework per aggiungere un nuovo modulo:
+
+1) aprire il file config/auth.php: li si troveranno i "guard" aggiungere i propri, seguendo la struttura del framework.
+    Questo farà si che laravel riconoscerà un determinato utente e dunque si potrà fare accesso ad esso dalla sessione.
+
+2) aprire il file bootstrap/app.php qui vi sono direttive di routing, infatti all'interno del package routes bisogna creare il proprio file di rotte dedicato e poi dire al framework tramite questo file che vi è un nuovo file di rotte da considerare,
+ qui vi sono anche direttive di reindirizzamento dell'utente in certi casi come un errore 404 o un errore 403, oppure un utente che non è loggato o un utente bannato, configurare il seguente file in modo che rispetti le necessità del proprio modulo.
+
+

@@ -6,12 +6,13 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web:[ 
         __DIR__.'/../routes/web.php',
         __DIR__.'/../routes/studyroom.php',
-        // aggiungere altre rotte
+        // QUI AGGIUNGI IL NOME DELLA ROTTA DEL TUO MODULO (IL FILE CREATO DENTRO LA CARTELLA routes)
         ],
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
@@ -49,7 +50,7 @@ return Application::configure(basePath: dirname(__DIR__))
             }
         });
 
-        // 2. GESTIONE ERRORE 404 (Not Found - NUOVO)
+        // 2. GESTIONE ERRORE 404 PER STUDYROOM
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {
             if (! $request->expectsJson()) {
                 // Se si trova dentro il modulo StudyRoom
@@ -59,7 +60,6 @@ return Application::configure(basePath: dirname(__DIR__))
                         ? redirect()->back()
                         : redirect()->route('studyroom.home');
                 }
-                // Se non è in studyroom, Laravel mostrerà il suo 404 standard
             }
         });
 
@@ -67,3 +67,5 @@ return Application::configure(basePath: dirname(__DIR__))
             fn (Request $request) => $request->is('api/*'),
         );
     })->create();
+
+    // AGGIUNGI LA GESTIONE PER IL TUO MODULO
