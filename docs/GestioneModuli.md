@@ -92,12 +92,16 @@ Nota: analogamente il roolback necessita della stessa logica: php artisan migrat
 
 
 
-Ora verrà spiegato brevemente come configurare il framework per aggiungere un nuovo modulo:
+Configurazione del Framework per un Nuovo Modulo
 
-1) aprire il file config/auth.php: li si troveranno i "guard" aggiungere i propri, seguendo la struttura del framework.
-    Questo farà si che laravel riconoscerà un determinato utente e dunque si potrà fare accesso ad esso dalla sessione.
+Ora verrà spiegato brevemente come configurare il framework per "accendere" il nuovo modulo appena creato:
 
-2) aprire il file bootstrap/app.php qui vi sono direttive di routing, infatti all'interno del package routes bisogna creare il proprio file di rotte dedicato e poi dire al framework tramite questo file che vi è un nuovo file di rotte da considerare,
- qui vi sono anche direttive di reindirizzamento dell'utente in certi casi come un errore 404 o un errore 403, oppure un utente che non è loggato o un utente bannato, configurare il seguente file in modo che rispetti le necessità del proprio modulo.
+1) Configurare i Guard (config/auth.php)
+Aprire il file e aggiungere i propri providers (associandoli al nuovo Model appena creato) e i nuovi guards (associandoli al provider). Seguendo la struttura del framework, questo farà sì che Laravel riconoscerà un determinato utente in modo isolato e si potrà fare accesso ad esso dalla sessione tramite Auth::guard('nome_guard').
 
+2) Configurare il Routing e le Eccezioni (bootstrap/app.php)
+All'interno del package routes/ bisogna creare il proprio file di rotte dedicato (es. affitti.php). Dopodiché, nel file bootstrap/app.php, dire al framework che vi è un nuovo file di rotte da considerare (utilizzando un prefisso URL dedicato per evitare conflitti).
+In questo stesso file vi sono anche direttive di reindirizzamento dell'utente in certi casi (errore 404, 403, utente non loggato o bannato); configurare il file in modo che rispetti le necessità del proprio modulo.
 
+3) Configurare la compilazione degli Asset (vite.config.js)
+Affinché i file CSS e JS inseriti nelle nuove cartelle (es. resources/css/affitti/) vengano elaborati correttamente e resi disponibili alle viste Blade, è obbligatorio registrarli. Aprire il file vite.config.js nella root del progetto e aggiungere i percorsi dei nuovi file all'interno dell'array input. Nei template Blade, tali risorse andranno poi richiamate con la direttiva @vite(['resources/css/affitti/tuo-file.css']).

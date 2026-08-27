@@ -2,7 +2,7 @@
 Per soddisfare il requisito di tabelle utente separate (es. studenti e amministratori) senza incorrere in duplicazioni o forzature sull'ereditarietà di Eloquent, è stato configurato un sistema basato su Guard e Provider multipli.
 
 A. I Modelli di Autenticazione
-Le classi che rappresentano gli utenti dei moduli (es. Studente e Amministratore) estendono la classe nativa Illuminate\Foundation\Auth\User (alias Authenticatable) e puntano a tabelle di database specifiche:
+Le classi che rappresentano gli utenti dei moduli (es. Studente e Amministratore) estendono la classe nativa Authenticatable e puntano a tabelle di database specifiche:
 
 App\Models\Studente -> Tabella studenti_studyroom
 
@@ -37,7 +37,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class UtenteModulo2 extends Authenticatable {
     protected $table = 'utenti_modulo2';
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', .....];
 }
 
 
@@ -59,6 +59,6 @@ Route::middleware('web')
     ->name('modulo2.')
     ->group(base_path('routes/modulo2.php'));
 # Implementazione dei Controller di Autenticazione
-Duplicare o adattare i controller di autenticazione (ispirandosi allo standard Breeze).
+Adattare i controller di autenticazione (ispirandosi allo standard Breeze).
 
 Assicurarsi che le chiamate ad Auth::guard(...) utilizzino il nuovo guard configurato nel punto 2 e che la validazione dell'unicità faccia riferimento alla classe del nuovo Model.
