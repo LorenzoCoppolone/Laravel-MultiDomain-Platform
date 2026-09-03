@@ -62,3 +62,4 @@ Route::middleware('web')
 Adattare i controller di autenticazione (ispirandosi allo standard Breeze).
 
 Assicurarsi che le chiamate ad Auth::guard(...) utilizzino il nuovo guard configurato nel punto 2 e che la validazione dell'unicità faccia riferimento alla classe del nuovo Model.
+Nota: assicurarsi che non esistano altre classi con lo stesso nome in quanto laravel gestisce l'unicità grazie al nome della classe, per evitare questi problemi è bene creare classi del tipo nomeModulo_tipoUtente. Ad esempio affitti_Amministratore.
