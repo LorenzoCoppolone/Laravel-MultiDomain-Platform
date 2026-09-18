@@ -107,7 +107,6 @@ All'interno del file config\database.php mappare la nuova connessione, nel segue
 
 'affitti' => [
     'driver' => 'mysql',
-    'session' => env('SESSION_DRIVER', 'database'),
     'url' => env('DB_URL_AFFITTI'),
     'host' => env('DB_HOST_AFFITTI', '127.0.0.1'),
     'port' => env('DB_PORT_AFFITTI', '3306'),
@@ -148,3 +147,5 @@ In questo stesso file vi sono anche direttive di reindirizzamento dell'utente in
 
 3) Configurare la compilazione degli Asset (vite.config.js)
 Durante lo sviluppo locale (npm run dev), Vite è in grado di servire gli asset "al volo" anche se non dichiarati. Tuttavia, è obbligatorio registrarli per la messa in produzione. Affinché i file CSS e JS (es. resources/css/affitti/) vengano compilati correttamente con il comando npm run build, bisogna aprire il file vite.config.js nella root del progetto e aggiungere i loro percorsi all'interno dell'array input.
+
+4) Andrebbe fatto un'ulteriore step che consiste nella separazione fisica delle sessioni, progettando un middleware dedicato che controllando l'url, dunque il modulo in cui l'utente sta navigando, sposti la connessione al rispettivo database.
