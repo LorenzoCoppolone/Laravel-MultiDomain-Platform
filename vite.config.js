@@ -14,7 +14,7 @@ export default defineConfig({
                 'resources/css/studyroom/styleProfiloUtente.css',
                 'resources/css/studyroom/styleModificaProfilo.css',
                 'resources/css/studyroom/styleBanned.css',
-                'reources/css/studyroom/styleRecensioniMateriale.css',
+                'resources/css/studyroom/styleRecensioniMateriale.css',
                 'resources/css/studyroom/styleRecensioniUtente.css',
                 'resources/css/studyroom/styleAssistenza.css',
                 'resources/css/studyroom/styleAdmin.css',
